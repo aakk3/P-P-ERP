@@ -1,1092 +1,610 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>My Tasks &amp; Letters</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP System - Complete Business Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/dist/tabler-icons.min.css">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --primary-h: 15;
-    --primary-s: 78%;
-    --primary-l: 58%;
-    --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
-    --primary-fg: #fff;
-    --bg: hsl(30, 30%, 97%);
-    --fg: hsl(20, 15%, 20%);
-    --card: #fff;
-    --card-border: hsl(30, 20%, 90%);
-    --muted: hsl(30, 15%, 55%);
-    --muted-bg: hsl(30, 25%, 94%);
-    --destructive: hsl(0, 72%, 56%);
-    --destructive-bg: hsl(0, 72%, 95%);
-    --success: hsl(145, 60%, 42%);
-    --success-bg: hsl(145, 60%, 95%);
-    --radius: 1rem;
-    --shadow: 0 2px 16px rgba(0,0,0,.07);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,.10);
-    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    --serif: Georgia, 'Times New Roman', serif;
-    --transition: 0.22s ease;
-  }
-  [data-accent="violet"] { --primary-h:260; --primary-s:76%; --primary-l:60%; }
-  [data-accent="sky"]    { --primary-h:200; --primary-s:88%; --primary-l:50%; }
-  [data-accent="amber"]  { --primary-h:38;  --primary-s:90%; --primary-l:52%; }
-  [data-accent="emerald"]{ --primary-h:155; --primary-s:68%; --primary-l:40%; }
-
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--fg);
-    min-height: 100vh;
-    padding-bottom: 2rem;
-  }
-
-  /* ── Navigation ── */
-  nav {
-    position: fixed;
-    top: 1.25rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    background: rgba(255,255,255,.88);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--card-border);
-    border-radius: 1.25rem;
-    padding: .35rem;
-    display: flex;
-    gap: .25rem;
-    box-shadow: var(--shadow-lg);
-  }
-  nav button {
-    position: relative;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font);
-    font-size: .82rem;
-    font-weight: 600;
-    color: var(--muted);
-    padding: .55rem 1rem;
-    border-radius: .85rem;
-    display: flex;
-    align-items: center;
-    gap: .4rem;
-    transition: color var(--transition), background var(--transition);
-    white-space: nowrap;
-  }
-  nav button:hover { color: var(--fg); background: var(--muted-bg); }
-  nav button.active {
-    background: var(--primary);
-    color: var(--primary-fg);
-  }
-  nav button.active:hover { background: var(--primary); }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.2rem;
-    height: 1.2rem;
-    border-radius: 50%;
-    font-size: .68rem;
-    font-weight: 700;
-    background: #fff;
-    color: var(--primary);
-    margin-left: .15rem;
-  }
-  nav button:not(.active) .badge {
-    background: var(--primary);
-    color: #fff;
-  }
-  nav button.missed-tab:not(.active) .badge {
-    background: var(--destructive);
-    color: #fff;
-  }
-
-  /* ── Pages ── */
-  .page { display: none; padding: 7rem 1rem 2rem; max-width: 700px; margin: 0 auto; }
-  .page.active { display: block; }
-
-  /* ── Tasks ── */
-  .page-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 1.75rem;
-  }
-  .page-header h1 { font-size: 1.9rem; font-weight: 800; }
-  .page-header p { margin-top: .25rem; color: var(--muted); font-weight: 500; font-size: .9rem; }
-
-  .notif-btn {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 50%;
-    width: 2.8rem;
-    height: 2.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    box-shadow: var(--shadow);
-    transition: all var(--transition);
-    flex-shrink: 0;
-  }
-  .notif-btn:hover { transform: scale(1.08); box-shadow: var(--shadow-lg); }
-  .notif-btn.active { background: var(--primary); border-color: var(--primary); }
-
-  /* ── Add Form ── */
-  .add-form {
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: .4rem .4rem .4rem .9rem;
-    box-shadow: var(--shadow);
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .add-form input[type="text"] {
-    flex: 1;
-    min-width: 140px;
-    border: none;
-    outline: none;
-    font-family: var(--font);
-    font-size: .95rem;
-    font-weight: 500;
-    background: transparent;
-    color: var(--fg);
-    padding: .5rem 0;
-  }
-  .add-form input[type="text"]::placeholder { color: var(--muted); }
-  .add-form input[type="datetime-local"] {
-    border: none;
-    outline: none;
-    background: var(--muted-bg);
-    border-radius: .6rem;
-    padding: .45rem .65rem;
-    font-size: .82rem;
-    font-family: var(--font);
-    color: var(--fg);
-    cursor: pointer;
-  }
-  .btn-add {
-    background: var(--primary);
-    color: var(--primary-fg);
-    border: none;
-    border-radius: .75rem;
-    width: 2.4rem;
-    height: 2.4rem;
-    font-size: 1.4rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all var(--transition);
-    font-weight: 300;
-    line-height: 1;
-  }
-  .btn-add:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.18); }
-
-  /* ── Empty State ── */
-  .empty {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: rgba(255,255,255,.6);
-    border: 1.5px dashed var(--card-border);
-    border-radius: 1.5rem;
-  }
-  .empty-icon {
-    width: 4rem; height: 4rem;
-    background: hsl(var(--primary-h), var(--primary-s), 92%);
-    color: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    margin: 0 auto 1rem;
-  }
-  .empty h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
-  .empty p { color: var(--muted); font-size: .9rem; }
-
-  /* ── Todo Items ── */
-  .todos { display: flex; flex-direction: column; gap: .65rem; }
-
-  /* LIST layout */
-  .layout-list .todo-item {
-    display: flex;
-    align-items: flex-start;
-    gap: .9rem;
-    padding: .9rem 1rem;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: .9rem;
-    box-shadow: var(--shadow);
-    transition: all var(--transition);
-    animation: fadeIn .25s ease;
-  }
-  .layout-list .todo-item:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
-
-  /* CARDS layout */
-  .layout-cards .todos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .85rem; }
-  .layout-cards .todo-item {
-    padding: 1.2rem;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 1.15rem;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-    transition: all var(--transition);
-    animation: fadeIn .25s ease;
-  }
-  .layout-cards .todo-item:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-  .layout-cards .todo-meta { display: flex; align-items: center; justify-content: space-between; }
-
-  /* COMPACT layout */
-  .layout-compact .todo-item {
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-    padding: .5rem .75rem;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: .6rem;
-    transition: all var(--transition);
-    animation: fadeIn .25s ease;
-  }
-
-  /* Shared todo parts */
-  .todo-check {
-    flex-shrink: 0;
-    width: 1.4rem;
-    height: 1.4rem;
-    border-radius: 50%;
-    border: 2px solid var(--card-border);
-    background: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: transparent;
-    transition: all var(--transition);
-    font-size: .75rem;
-    margin-top: .1rem;
-  }
-  .todo-check:hover { border-color: var(--primary); }
-  .todo-check.checked { background: var(--primary); border-color: var(--primary); color: #fff; }
-
-  .todo-body { flex: 1; min-width: 0; }
-  .todo-title {
-    font-size: .95rem;
-    font-weight: 600;
-    color: var(--fg);
-    transition: all var(--transition);
-    word-break: break-word;
-  }
-  .todo-item.done .todo-title { text-decoration: line-through; color: var(--muted); }
-  .layout-compact .todo-title { font-size: .87rem; }
-
-  .todo-due {
-    display: inline-flex;
-    align-items: center;
-    gap: .3rem;
-    margin-top: .35rem;
-    font-size: .75rem;
-    font-weight: 600;
-    padding: .2rem .55rem;
-    border-radius: 2rem;
-    background: var(--muted-bg);
-    color: var(--muted);
-    border: 1px solid transparent;
-  }
-  .todo-due.overdue { background: var(--destructive-bg); color: var(--destructive); border-color: hsl(0, 72%, 88%); }
-  .todo-due.ok { background: hsl(var(--primary-h), var(--primary-s), 93%); color: var(--primary); }
-  .layout-compact .todo-due { display: none; }
-
-  .todo-delete {
-    flex-shrink: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    color: var(--muted);
-    padding: .25rem;
-    border-radius: .4rem;
-    opacity: 0;
-    transition: all var(--transition);
-  }
-  .todo-item:hover .todo-delete { opacity: 1; }
-  .todo-delete:hover { color: var(--destructive); background: var(--destructive-bg); }
-
-  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
-
-  /* ── Missed Page ── */
-  .missed-header { margin-bottom: 1.75rem; }
-  .missed-header h1 { font-size: 1.9rem; font-weight: 800; }
-  .missed-header p { margin-top: .25rem; color: var(--muted); font-weight: 500; font-size: .9rem; }
-
-  /* ── Letter Page ── */
-  #page-letter {
-    max-width: 680px;
-    background: none;
-  }
-  .letter-card {
-    background: var(--card);
-    border: 1px solid hsl(var(--primary-h), var(--primary-s), 88%);
-    border-radius: 2rem;
-    padding: 3rem 3.5rem;
-    box-shadow: 0 8px 40px rgba(0,0,0,.09);
-    position: relative;
-    overflow: hidden;
-  }
-  .letter-floral {
-    position: absolute;
-    font-size: 4rem;
-    opacity: .12;
-    pointer-events: none;
-    line-height: 1;
-  }
-  .letter-floral.tl { top: -1rem; left: -1rem; transform: rotate(-15deg); }
-  .letter-floral.br { bottom: -1rem; right: -1rem; transform: rotate(165deg); }
-  .letter-greeting {
-    font-family: var(--serif);
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--primary);
-    font-style: italic;
-    margin-bottom: 1.75rem;
-    position: relative;
-    z-index: 1;
-  }
-  .letter-body {
-    font-family: var(--serif);
-    font-size: 1.08rem;
-    line-height: 1.9;
-    color: var(--fg);
-    position: relative;
-    z-index: 1;
-  }
-  .letter-body p { margin-bottom: 1.3rem; }
-  .letter-body p:first-child::first-letter {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--primary);
-    float: left;
-    margin-right: .2rem;
-    line-height: .85;
-  }
-  .letter-sign {
-    margin-top: 2.5rem;
-    text-align: right;
-    position: relative;
-    z-index: 1;
-  }
-  .letter-sign p { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .95rem; }
-  .letter-sign strong { display: block; font-size: 1.5rem; color: var(--primary); margin-top: .35rem; font-family: var(--serif); }
-
-  /* ── Settings Page ── */
-  .settings-section {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
-    margin-bottom: 1.25rem;
-    box-shadow: var(--shadow);
-  }
-  .settings-section h2 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-  .settings-section h2 span { font-size: 1.15rem; }
-
-  /* Layout picker */
-  .layout-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
-  .layout-opt {
-    border: 2px solid var(--card-border);
-    border-radius: .85rem;
-    padding: 1rem .75rem .85rem;
-    cursor: pointer;
-    text-align: center;
-    transition: all var(--transition);
-    background: var(--bg);
-  }
-  .layout-opt:hover { border-color: var(--primary); }
-  .layout-opt.selected { border-color: var(--primary); background: hsl(var(--primary-h), var(--primary-s), 95%); }
-  .layout-opt-icon { font-size: 1.6rem; margin-bottom: .45rem; }
-  .layout-opt-name { font-size: .82rem; font-weight: 700; color: var(--fg); }
-  .layout-opt-desc { font-size: .72rem; color: var(--muted); margin-top: .15rem; }
-
-  /* Ringtone picker */
-  .ringtone-list { display: flex; flex-direction: column; gap: .55rem; }
-  .ringtone-opt {
-    display: flex;
-    align-items: center;
-    gap: .85rem;
-    padding: .75rem 1rem;
-    border: 2px solid var(--card-border);
-    border-radius: .85rem;
-    cursor: pointer;
-    background: var(--bg);
-    transition: all var(--transition);
-  }
-  .ringtone-opt:hover { border-color: var(--primary); }
-  .ringtone-opt.selected { border-color: var(--primary); background: hsl(var(--primary-h), var(--primary-s), 95%); }
-  .ringtone-opt input[type="radio"] { display: none; }
-  .ringtone-emoji { font-size: 1.3rem; }
-  .ringtone-name { flex: 1; font-weight: 600; font-size: .9rem; }
-  .ringtone-play {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: .55rem;
-    padding: .35rem .75rem;
-    font-size: .78rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all var(--transition);
-    letter-spacing: .02em;
-  }
-  .ringtone-play:hover { opacity: .85; transform: scale(1.04); }
-
-  /* Accent color */
-  .accent-grid { display: flex; gap: .65rem; flex-wrap: wrap; }
-  .accent-opt {
-    width: 2.4rem;
-    height: 2.4rem;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid transparent;
-    transition: all var(--transition);
-    flex-shrink: 0;
-    position: relative;
-  }
-  .accent-opt:hover { transform: scale(1.12); }
-  .accent-opt.selected { border-color: var(--fg); }
-  .accent-opt.selected::after {
-    content: '✓';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: .85rem;
-    font-weight: 800;
-  }
-
-  /* Notification in settings */
-  .notif-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .notif-row p { font-size: .88rem; color: var(--muted); margin-top: .3rem; }
-  .toggle {
-    position: relative;
-    width: 3rem;
-    height: 1.7rem;
-    flex-shrink: 0;
-  }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider {
-    position: absolute;
-    inset: 0;
-    background: var(--card-border);
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-  .toggle-slider::before {
-    content: '';
-    position: absolute;
-    width: 1.2rem;
-    height: 1.2rem;
-    left: .25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fff;
-    border-radius: 50%;
-    transition: all var(--transition);
-    box-shadow: 0 1px 4px rgba(0,0,0,.18);
-  }
-  .toggle input:checked + .toggle-slider { background: var(--primary); }
-  .toggle input:checked + .toggle-slider::before { left: 1.55rem; }
-
-  .btn-request-notif {
-    background: var(--primary);
-    color: var(--primary-fg);
-    border: none;
-    border-radius: .75rem;
-    padding: .65rem 1.25rem;
-    font-size: .88rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all var(--transition);
-    margin-top: .75rem;
-    display: flex;
-    align-items: center;
-    gap: .4rem;
-  }
-  .btn-request-notif:hover { opacity: .88; transform: translateY(-1px); }
-
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(120%);
-    background: var(--fg);
-    color: #fff;
-    padding: .7rem 1.4rem;
-    border-radius: 2rem;
-    font-size: .88rem;
-    font-weight: 600;
-    z-index: 9999;
-    box-shadow: var(--shadow-lg);
-    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
-    white-space: nowrap;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  @media (max-width: 500px) {
-    nav { top: .75rem; padding: .3rem; }
-    nav button { padding: .45rem .7rem; font-size: .78rem; }
-    .page { padding-top: 6rem; }
-    .letter-card { padding: 2rem 1.5rem; }
-    .layout-grid { grid-template-columns: 1fr; }
-  }
-
-  /* =========================================================
-   Mobile Optimization - Phone Styles (Max Width: 600px)
-   ========================================================= */
-@media only screen and (max-width: 600px) {
-  
-  /* 1. Ensure content fits screen and stacks vertically */
-  body {
-    width: 100% !important;
-    overflow-x: hidden;
-    padding: 0 10px;
-    font-size: 16px; /* Improves readability on mobile */
-  }
-
-  /* 2. Make all images fluid to prevent overflow */
-  img, video, canvas, svg {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* 3. Force columns to stack */
-  .container, .row, .column, div {
-    width: 100% !important;
-    display: block !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* 4. Increase tap target size for links/buttons */
-  a, button, .btn {
-    padding: 12px !important;
-    display: block;
-    margin-bottom: 10px;
-  }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
-s
+
+:root{
+--blue:#2563eb;
+--blue-dark:#1d4ed8;
+--blue-light:#eff6ff;
+--white:#ffffff;
+--gray:#64748b;
+--dark:#0f172a;
+--border:#e2e8f0;
+--bg:#f8fbff;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--white);
+color:var(--dark);
+line-height:1.6;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:0 24px;
+}
+
+/* NAV */
+.login-btn{
+    display:inline-block;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:10px;
+    font-weight:600;
+    transition:0.2s;
+}
+
+.login-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
 </style>
+CTA Button for Your Hero Section
+<a href="https://kitchen-batch-buddy--coder575.replit.app/login" class="btn-primary">
+    <i class="ti ti-login"></i>
+    
+</a>
+
+<style>
+.btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+    transition:.2s;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+</style>
+Floating Bottom-Right Button
+<a href="https://kitchen-batch-buddy--coder575.replit.app/login" class="floating-login">
+    <i class="ti ti-login"></i> Redirect
+</a>
+
+<style>
+.floating-login{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#2563eb;
+    color:#fff;
+    text-decoration:none;
+    padding:14px 22px;
+    border-radius:999px;
+    font-weight:600;
+    z-index:9999;
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+.floating-login:hover{
+    background:#1d4ed8;
+}
+nav{
+position:sticky;
+top:0;
+z-index:1000;
+background:white;
+border-bottom:1px solid var(--border);
+}
+
+.nav-inner{
+height:72px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.logo{
+font-size:22px;
+font-weight:800;
+color:var(--blue);
+text-decoration:none;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.nav-links{
+display:flex;
+gap:28px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:var(--gray);
+font-weight:500;
+}
+
+.nav-links a:hover{
+color:var(--blue);
+}
+
+.btn{
+display:inline-block;
+padding:12px 22px;
+border-radius:10px;
+font-weight:600;
+text-decoration:none;
+transition:.2s;
+}
+
+.btn-primary{
+background:var(--blue);
+color:white;
+}
+
+.btn-primary:hover{
+background:var(--blue-dark);
+}
+
+/* HERO */
+
+.hero{
+padding:100px 0;
+background:linear-gradient(180deg,#ffffff,#eff6ff);
+}
+
+.hero-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.badge{
+display:inline-block;
+padding:8px 14px;
+background:#dbeafe;
+color:var(--blue);
+font-weight:700;
+border-radius:999px;
+margin-bottom:20px;
+}
+
+.hero h1{
+font-size:58px;
+line-height:1.1;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:20px;
+color:var(--gray);
+margin-bottom:30px;
+}
+
+.hero-card{
+background:white;
+padding:35px;
+border-radius:24px;
+box-shadow:0 15px 40px rgba(37,99,235,.12);
+border:1px solid var(--border);
+}
+
+.hero-card h3{
+margin-bottom:20px;
+}
+
+.metric{
+display:flex;
+align-items:center;
+gap:12px;
+padding:15px 0;
+border-bottom:1px solid #edf2f7;
+}
+
+.metric:last-child{
+border:none;
+}
+
+.metric i{
+font-size:24px;
+color:var(--blue);
+}
+
+/* SECTION */
+
+section{
+padding:90px 0;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title h2{
+font-size:42px;
+margin-bottom:12px;
+}
+
+.section-title p{
+color:var(--gray);
+max-width:700px;
+margin:auto;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:white;
+padding:28px;
+border-radius:18px;
+border:1px solid var(--border);
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 30px rgba(37,99,235,.08);
+}
+
+.card i{
+font-size:34px;
+color:var(--blue);
+margin-bottom:16px;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+/* PRICING */
+
+.pricing{
+background:var(--bg);
+}
+
+.price-card{
+max-width:500px;
+margin:auto;
+background:white;
+padding:45px;
+border-radius:24px;
+text-align:center;
+box-shadow:0 15px 40px rgba(37,99,235,.12);
+border:2px solid #dbeafe;
+}
+
+.price{
+font-size:72px;
+font-weight:800;
+color:var(--blue);
+line-height:1;
+}
+
+.price small{
+font-size:20px;
+}
+
+.trial{
+margin:20px 0;
+padding:14px;
+border-radius:12px;
+background:#dcfce7;
+color:#166534;
+font-weight:700;
+}
+
+/* CTA */
+
+.cta{
+background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+color:white;
+text-align:center;
+border-radius:30px;
+padding:70px 40px;
+}
+
+.cta h2{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.cta p{
+font-size:18px;
+opacity:.95;
+max-width:700px;
+margin:auto;
+margin-bottom:25px;
+}
+
+.cta .btn{
+background:white;
+color:var(--blue);
+}
+
+/* FOOTER */
+
+footer{
+padding:40px 0;
+text-align:center;
+color:var(--gray);
+border-top:1px solid var(--border);
+margin-top:80px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero-grid{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.nav-links{
+display:none;
+}
+}
+</style>
+
 </head>
 <body>
 
-<!-- ── Navigation ── -->
 <nav>
-  <button class="nav-btn active" data-page="tasks" onclick="switchPage('tasks')">
-    ☑️ Tasks <span class="badge" id="badge-tasks" style="display:none"></span>
-  </button>
-  <button class="nav-btn missed-tab" data-page="missed" onclick="switchPage('missed')">
-    ⚠️ Missed <span class="badge" id="badge-missed" style="display:none"></span>
-  </button>
-  <button class="nav-btn" data-page="letter" onclick="switchPage('letter')">
-    💌 Thank You
-  </button>
-  <button class="nav-btn" data-page="settings" onclick="switchPage('settings')">
-    ⚙️ Settings
-  </button>
+<div class="container nav-inner">
+
+<a href="#" class="logo">
+<i class="ti ti-building-skyscraper"></i>
+ERP System
+</a>
+
+<div class="nav-links">
+<a href="#features">Features</a>
+<a href="#modules">Modules</a>
+<a href="#pricing">Pricing</a>
+<a href="#contact">Contact</a>
+</div>
+</div>
+</a>
+
+
 </nav>
 
-<!-- ── Tasks Page ── -->
-<div id="page-tasks" class="page active layout-list">
-  <div class="page-header">
-    <div>
-      <h1>My Tasks</h1>
-      <p id="tasks-subtitle">0 tasks remaining</p>
-    </div>
-    <button class="notif-btn" id="notif-btn" onclick="handleNotifClick()" title="Notifications">🔔</button>
-  </div>
+<section class="hero">
+<div class="container hero-grid">
 
-  <form class="add-form" onsubmit="addTodo(event)">
-    <input type="text" id="new-title" placeholder="What needs to be done?" autocomplete="off" />
-    <input type="datetime-local" id="new-due" />
-    <button type="submit" class="btn-add">+</button>
-  </form>
-
-  <div id="tasks-list" class="todos"></div>
-  <div id="tasks-empty" class="empty" style="display:none">
-    <div class="empty-icon">☑️</div>
-    <h3>All caught up!</h3>
-    <p>You have no tasks on your plate right now.</p>
-  </div>
+<div>
+<div class="badge">
+Enterprise Grade ERP Platform
 </div>
 
-<!-- ── Missed Page ── -->
-<div id="page-missed" class="page layout-list">
-  <div class="missed-header">
-    <h1>Missed Tasks</h1>
-    <p id="missed-subtitle">0 overdue tasks</p>
-  </div>
-  <div id="missed-list" class="todos"></div>
-  <div id="missed-empty" class="empty" style="display:none">
-    <div class="empty-icon" style="background:hsl(145,60%,92%);color:hsl(145,60%,40%)">✅</div>
-    <h3>Nothing missed!</h3>
-    <p>You're all on track — no overdue tasks.</p>
-  </div>
+<h1>Run Your Entire Business From One System</h1>
+
+<p>
+Manage finance, inventory, procurement, sales, analytics,
+audit logs, and operations from a single integrated platform.
+</p>
+
+<a href="#pricing" class="btn btn-primary">
+View Pricing
+</a>
 </div>
 
-<!-- ── Letter Page ── -->
-<div id="page-letter" class="page">
-  <div class="letter-card">
-    <div class="letter-floral tl">🌸🌿</div>
-    <div class="letter-floral br">🌸🌿</div>
-    <div class="letter-greeting"> Tata and Seedo,</div>
-    <div class="letter-body">
-      <p>Dear Tata and Seedo,
-I know when I’m over at your house it probably looks like I’m just messing around, glued to my phone, or not really paying attention. I know I can be a bit of a handful (or a lot of a handful), but I wanted you to know that I actually love every minute I spend with you.
-Even when I’m being loud or acting like I’m in my own world, I’m listening to your stories and soaking up the vibe of being home with you guys. Those moments mean more to me than I probably let on.
-Thank you for putting up with my chaos and for always being the place where I can just be myself. I promise I’m learning more from you two than it looks like!
-Love you both,
+<div class="hero-card">
 
- you more than words can say — to the moon and back, and then some.</p>
-    </div>
-    <div class="letter-sign">
-      <p>With all my love and gratitude,</p>
-      <strong>Your Grandchild Mansour💛</strong>
-    </div>
-  </div>
+<h3>Everything Included</h3>
+
+<div class="metric">
+<i class="ti ti-report-money"></i>
+<div>
+<strong>Finance & Accounting</strong>
+</div>
 </div>
 
-<!-- ── Settings Page ── -->
-<div id="page-settings" class="page">
-  <div class="page-header">
-    <div><h1>Settings</h1><p>Customize your experience</p></div>
-  </div>
-
-  <!-- Layout -->
-  <div class="settings-section">
-    <h2><span>🗂️</span> Task Layout</h2>
-    <div class="layout-grid">
-      <div class="layout-opt selected" data-layout="list" onclick="setLayout('list')">
-        <div class="layout-opt-icon">☰</div>
-        <div class="layout-opt-name">List</div>
-        <div class="layout-opt-desc">Clean rows</div>
-      </div>
-      <div class="layout-opt" data-layout="cards" onclick="setLayout('cards')">
-        <div class="layout-opt-icon">⊞</div>
-        <div class="layout-opt-name">Cards</div>
-        <div class="layout-opt-desc">Visual grid</div>
-      </div>
-      <div class="layout-opt" data-layout="compact" onclick="setLayout('compact')">
-        <div class="layout-opt-icon">≡</div>
-        <div class="layout-opt-name">Compact</div>
-        <div class="layout-opt-desc">Dense view</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ringtone -->
-  <div class="settings-section">
-    <h2><span>🎵</span> Notification Sound</h2>
-    <div class="ringtone-list" id="ringtone-list"></div>
-  </div>
-
-  <!-- Accent Color -->
-  <div class="settings-section">
-    <h2><span>🎨</span> Accent Color</h2>
-    <div class="accent-grid">
-      <div class="accent-opt selected" data-accent="rose" onclick="setAccent('rose')" style="background:hsl(15,78%,58%)" title="Rose"></div>
-      <div class="accent-opt" data-accent="violet" onclick="setAccent('violet')" style="background:hsl(260,76%,60%)" title="Violet"></div>
-      <div class="accent-opt" data-accent="sky" onclick="setAccent('sky')" style="background:hsl(200,88%,50%)" title="Sky"></div>
-      <div class="accent-opt" data-accent="amber" onclick="setAccent('amber')" style="background:hsl(38,90%,52%)" title="Amber"></div>
-      <div class="accent-opt" data-accent="emerald" onclick="setAccent('emerald')" style="background:hsl(155,68%,40%)" title="Emerald"></div>
-    </div>
-  </div>
-
-  <!-- Notifications -->
-  <div class="settings-section">
-    <h2><span>🔔</span> Notifications</h2>
-    <div class="notif-row">
-      <div>
-        <div style="font-weight:600;font-size:.95rem">Push Notifications</div>
-        <p id="notif-status-text">Enable to get reminders for due tasks</p>
-      </div>
-      <label class="toggle">
-        <input type="checkbox" id="notif-toggle" onchange="handleNotifToggle(this.checked)" />
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
-    <button class="btn-request-notif" id="notif-request-btn" onclick="requestNotifPermission()" style="display:none">
-      🔔 Grant Permission
-    </button>
-  </div>
+<div class="metric">
+<i class="ti ti-package"></i>
+<div>
+<strong>Inventory Management</strong>
+</div>
 </div>
 
-<!-- Toast -->
-<div class="toast" id="toast"></div>
+<div class="metric">
+<i class="ti ti-shopping-cart"></i>
+<div>
+<strong>Sales & Orders</strong>
+</div>
+</div>
 
-<script>
-// ══════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════
-let todos = [];
-let settings = {
-  layout: 'list',
-  ringtone: 'gentle-bell',
-  accent: 'rose',
-  notifEnabled: false,
-};
-let scheduledTimeouts = new Map();
+<div class="metric">
+<i class="ti ti-chart-bar"></i>
+<div>
+<strong>Analytics & KPIs</strong>
+</div>
+</div>
 
-const RINGTONES = [
-  { id: 'gentle-bell', emoji: '🔔', name: 'Gentle Bell' },
-  { id: 'digital-ping', emoji: '📱', name: 'Digital Ping' },
-  { id: 'chime',       emoji: '🎵', name: 'Chime' },
-  { id: 'sunrise',     emoji: '🌅', name: 'Sunrise' },
-  { id: 'alert',       emoji: '🚨', name: 'Alert' },
-];
+</div>
 
-// ══════════════════════════════════════════
-//  PERSIST
-// ══════════════════════════════════════════
-function save() {
-  localStorage.setItem('todos-v1', JSON.stringify(todos));
-  localStorage.setItem('settings-v1', JSON.stringify(settings));
-}
-function load() {
-  try { todos = JSON.parse(localStorage.getItem('todos-v1')) || []; } catch { todos = []; }
-  try {
-    const s = JSON.parse(localStorage.getItem('settings-v1'));
-    if (s) settings = { ...settings, ...s };
-  } catch {}
-}
+</div>
+</section>
 
-// ══════════════════════════════════════════
-//  AUDIO (Web Audio API — no files needed)
-// ══════════════════════════════════════════
-let audioCtx;
-function getAudio() {
-  if (!audioCtx || audioCtx.state === 'closed')
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
-function tone(ctx, freq, start, dur, type = 'sine', gain = 0.35) {
-  const osc = ctx.createOscillator();
-  const g = ctx.createGain();
-  osc.connect(g); g.connect(ctx.destination);
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
-  g.gain.setValueAtTime(0, ctx.currentTime + start);
-  g.gain.linearRampToValueAtTime(gain, ctx.currentTime + start + 0.01);
-  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
-  osc.start(ctx.currentTime + start);
-  osc.stop(ctx.currentTime + start + dur + 0.05);
-}
-function playSound(id) {
-  try {
-    const ctx = getAudio();
-    if (ctx.state === 'suspended') ctx.resume();
-    ({
-      'gentle-bell': (c) => { tone(c,880,0,.8,'sine',.3); tone(c,1320,.05,.6,'sine',.15); tone(c,880,.5,.8,'sine',.2); },
-      'digital-ping': (c) => { tone(c,1200,0,.12,'square',.22); tone(c,1600,.15,.12,'square',.18); tone(c,2000,.3,.2,'square',.26); },
-      'chime':        (c) => { [523,659,784,1047].forEach((f,i)=>tone(c,f,i*.15,.6,'sine',.22)); },
-      'sunrise':      (c) => { [440,550,660,880,1100].forEach((f,i)=>tone(c,f,i*.22,.5,'sine',.2+i*.03)); },
-      'alert':        (c) => { tone(c,900,0,.1,'sawtooth',.3); tone(c,900,.2,.1,'sawtooth',.3); tone(c,1200,.4,.25,'sawtooth',.36); },
-    })[id](ctx);
-  } catch(e) { console.warn('audio error', e); }
-}
+<section id="features">
+<div class="container">
 
-// ══════════════════════════════════════════
-//  NOTIFICATIONS
-// ══════════════════════════════════════════
-function scheduleNotifications() {
-  scheduledTimeouts.forEach(t => clearTimeout(t));
-  scheduledTimeouts.clear();
-  if (!settings.notifEnabled || Notification.permission !== 'granted') return;
-  const now = Date.now();
-  todos.forEach(todo => {
-    if (!todo.completed && todo.dueAt) {
-      const t = new Date(todo.dueAt).getTime() - now;
-      if (t > 0 && t < 2147483647) {
-        const id = setTimeout(() => {
-          playSound(settings.ringtone);
-          if (Notification.permission === 'granted')
-            new Notification('Task Reminder ✨', { body: `Time to: "${todo.title}"`, icon: '' });
-        }, t);
-        scheduledTimeouts.set(todo.id, id);
-      }
-    }
-  });
-}
-async function requestNotifPermission() {
-  const perm = await Notification.requestPermission();
-  settings.notifEnabled = perm === 'granted';
-  save();
-  updateNotifUI();
-  scheduleNotifications();
-  showToast(perm === 'granted' ? '🔔 Notifications enabled!' : '❌ Permission denied');
-}
-function handleNotifClick() {
-  if (!('Notification' in window)) { showToast('Notifications not supported'); return; }
-  if (Notification.permission === 'default') { requestNotifPermission(); return; }
-  if (Notification.permission === 'denied') { showToast('Enable notifications in browser settings'); return; }
-  settings.notifEnabled = !settings.notifEnabled;
-  save(); updateNotifUI(); scheduleNotifications();
-  showToast(settings.notifEnabled ? '🔔 Notifications on' : '🔕 Notifications off');
-}
-function handleNotifToggle(checked) {
-  if (checked && Notification.permission !== 'granted') {
-    document.getElementById('notif-toggle').checked = false;
-    document.getElementById('notif-request-btn').style.display = 'flex';
-    return;
-  }
-  settings.notifEnabled = checked;
-  save(); updateNotifUI(); scheduleNotifications();
-}
-function updateNotifUI() {
-  const btn = document.getElementById('notif-btn');
-  const toggle = document.getElementById('notif-toggle');
-  const reqBtn = document.getElementById('notif-request-btn');
-  const statusText = document.getElementById('notif-status-text');
-  const granted = 'Notification' in window && Notification.permission === 'granted';
-  const enabled = settings.notifEnabled && granted;
-  btn.classList.toggle('active', enabled);
-  btn.title = enabled ? 'Notifications on' : 'Notifications off';
-  toggle.checked = enabled;
-  if (granted) {
-    reqBtn.style.display = 'none';
-    statusText.textContent = enabled ? 'You will be reminded when tasks are due' : 'Click to enable reminders';
-  } else {
-    reqBtn.style.display = Notification.permission === 'denied' ? 'none' : 'flex';
-    statusText.textContent = Notification.permission === 'denied'
-      ? 'Permission denied — enable in browser settings'
-      : 'Grant permission to receive reminders';
-  }
-}
+<div class="section-title">
+<h2>Why Businesses Choose Our ERP</h2>
+<p>
+Centralize operations, eliminate duplicate work,
+and gain real-time visibility across your organization.
+</p>
+</div>
 
-// ══════════════════════════════════════════
-//  TODOS
-// ══════════════════════════════════════════
-function genId() { return Date.now() + Math.random().toString(36).slice(2); }
+<div class="grid">
 
-function addTodo(e) {
-  e.preventDefault();
-  const title = document.getElementById('new-title').value.trim();
-  if (!title) return;
-  const dueRaw = document.getElementById('new-due').value;
-  todos.push({ id: genId(), title, completed: false, dueAt: dueRaw ? new Date(dueRaw).toISOString() : null, createdAt: new Date().toISOString() });
-  document.getElementById('new-title').value = '';
-  document.getElementById('new-due').value = '';
-  save(); renderAll(); scheduleNotifications();
-  showToast('✅ Task added!');
-}
+<div class="card">
+<i class="ti ti-database"></i>
+<h3>Centralized Data</h3>
+<p>One source of truth across your company.</p>
+</div>
 
-function toggleTodo(id) {
-  const t = todos.find(t => t.id === id);
-  if (t) { t.completed = !t.completed; save(); renderAll(); scheduleNotifications(); }
-}
+<div class="card">
+<i class="ti ti-bolt"></i>
+<h3>Automation</h3>
+<p>Reduce manual work and streamline workflows.</p>
+</div>
 
-function deleteTodo(id) {
-  todos = todos.filter(t => t.id !== id);
-  save(); renderAll(); scheduleNotifications();
-  showToast('🗑️ Task deleted');
-}
+<div class="card">
+<i class="ti ti-chart-line"></i>
+<h3>Real-Time Insights</h3>
+<p>Track performance instantly with dashboards.</p>
+</div>
 
-// ══════════════════════════════════════════
-//  RENDER
-// ══════════════════════════════════════════
-function isOverdue(todo) {
-  return !todo.completed && todo.dueAt && new Date(todo.dueAt) < new Date();
-}
+<div class="card">
+<i class="ti ti-shield-lock"></i>
+<h3>Audit Logs</h3>
+<p>Every action is tracked for accountability.</p>
+</div>
 
-function formatDue(iso) {
-  const d = new Date(iso);
-  return d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
-}
+</div>
 
-function makeTodoEl(todo) {
-  const over = isOverdue(todo);
-  const hasDue = !!todo.dueAt;
-  const div = document.createElement('div');
-  div.className = 'todo-item' + (todo.completed ? ' done' : '');
-  div.dataset.id = todo.id;
+</div>
+</section>
 
-  const dueTag = hasDue
-    ? `<span class="todo-due ${over ? 'overdue' : todo.completed ? '' : 'ok'}">
-        ${over ? '⚠️' : '📅'} ${formatDue(todo.dueAt)}${over && !todo.completed ? ' (Overdue)' : ''}
-       </span>`
-    : '';
+<section id="modules">
+<div class="container">
 
-  div.innerHTML = `
-    <button class="todo-check ${todo.completed ? 'checked' : ''}" onclick="toggleTodo('${todo.id}')">✓</button>
-    <div class="todo-body">
-      <div class="todo-title">${escHtml(todo.title)}</div>
-      ${dueTag}
-    </div>
-    <div class="todo-meta" style="display:flex;align-items:center;gap:.4rem;"></div>
-    <button class="todo-delete" onclick="deleteTodo('${todo.id}')" title="Delete">🗑</button>
-  `;
-  return div;
-}
+<div class="section-title">
+<h2>ERP Modules</h2>
+<p>
+Everything your business needs in one platform.
+</p>
+</div>
 
-function renderTodos(containerId, emptyId, items) {
-  const container = document.getElementById(containerId);
-  const empty = document.getElementById(emptyId);
-  container.innerHTML = '';
-  if (!items.length) {
-    container.style.display = 'none';
-    empty.style.display = '';
-  } else {
-    container.style.display = '';
-    empty.style.display = 'none';
-    items.forEach(t => container.appendChild(makeTodoEl(t)));
-  }
-}
+<div class="grid">
 
-function renderAll() {
-  const now = new Date();
-  const allTodos = todos;
-  const missed = todos.filter(t => isOverdue(t));
-  const incomplete = todos.filter(t => !t.completed).length;
-  const missedCount = missed.length;
+<div class="card">
+<h3>POS</h3>
+<p>Point of sale, connection with manager and admin.</p>
+</div>
 
-  renderTodos('tasks-list', 'tasks-empty', allTodos);
-  renderTodos('missed-list', 'missed-empty', missed);
 
-  document.getElementById('tasks-subtitle').textContent =
-    `${incomplete} ${incomplete === 1 ? 'task' : 'tasks'} remaining`;
-  document.getElementById('missed-subtitle').textContent =
-    `${missedCount} overdue ${missedCount === 1 ? 'task' : 'tasks'}`;
 
-  // Badges
-  const tb = document.getElementById('badge-tasks');
-  tb.textContent = incomplete;
-  tb.style.display = incomplete > 0 ? 'inline-flex' : 'none';
+<div class="card">
+<h3>Kitchen</h3>
+<p>Kitchen load equality.</p>
+</div>
 
-  const mb = document.getElementById('badge-missed');
-  mb.textContent = missedCount;
-  mb.style.display = missedCount > 0 ? 'inline-flex' : 'none';
+<div class="card">
+<h3>Admin</h3>
+<p>An account esspecially for the resturant owner.</p>
+</div>
 
-  // Apply layout class to both task containers
-  ['page-tasks', 'page-missed'].forEach(pid => {
-    const el = document.getElementById(pid);
-    el.className = el.className.replace(/layout-\w+/, '') + ` layout-${settings.layout}`;
-  });
-}
+<div class="card">
+<h3>Manager</h3>
+<p>Has control to pos, kitchens.</p>
+</div>
 
-// ══════════════════════════════════════════
-//  SETTINGS ACTIONS
-// ══════════════════════════════════════════
-function setLayout(l) {
-  settings.layout = l;
-  save();
-  document.querySelectorAll('.layout-opt').forEach(el => el.classList.toggle('selected', el.dataset.layout === l));
-  renderAll();
-  showToast(`Layout: ${l}`);
-}
+<div class="card">
+<h3>Audit Logs</h3>
+<p>Full activity history and compliance.</p>
+</div>
 
-function setAccent(a) {
-  settings.accent = a;
-  save();
-  document.documentElement.dataset.accent = a;
-  document.querySelectorAll('.accent-opt').forEach(el => el.classList.toggle('selected', el.dataset.accent === a));
-  showToast(`Color updated!`);
-}
+</div>
 
-function setRingtone(id) {
-  settings.ringtone = id;
-  save();
-  document.querySelectorAll('.ringtone-opt').forEach(el => el.classList.toggle('selected', el.dataset.ringtone === id));
-}
+</div>
+</section>
 
-function buildRingtoneList() {
-  const list = document.getElementById('ringtone-list');
-  list.innerHTML = '';
-  RINGTONES.forEach(r => {
-    const div = document.createElement('div');
-    div.className = 'ringtone-opt' + (settings.ringtone === r.id ? ' selected' : '');
-    div.dataset.ringtone = r.id;
-    div.onclick = () => setRingtone(r.id);
-    div.innerHTML = `
-      <input type="radio" name="ringtone" ${settings.ringtone === r.id ? 'checked' : ''} />
-      <span class="ringtone-emoji">${r.emoji}</span>
-      <span class="ringtone-name">${r.name}</span>
-      <button class="ringtone-play" onclick="event.stopPropagation();playSound('${r.id}')">▶ Preview</button>
-    `;
-    list.appendChild(div);
-  });
-}
+<section class="pricing" id="pricing">
 
-// ══════════════════════════════════════════
-//  NAVIGATION
-// ══════════════════════════════════════════
-function switchPage(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === pageId));
-  document.getElementById('page-' + pageId).classList.add('active');
-}
+<div class="container">
 
-// ══════════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════════
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
-}
+<div class="section-title">
+<h2>Simple Pricing</h2>
+<p>One price. Full access. No hidden fees.</p>
+</div>
 
-// ══════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+<div class="price-card">
 
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
-load();
-document.documentElement.dataset.accent = settings.accent;
-buildRingtoneList();
+<div class="price">
+$59.99
+</div>
 
-// Restore layout picker UI
-document.querySelectorAll('.layout-opt').forEach(el =>
-  el.classList.toggle('selected', el.dataset.layout === settings.layout));
-document.querySelectorAll('.accent-opt').forEach(el =>
-  el.classList.toggle('selected', el.dataset.accent === settings.accent));
+<p style="margin-top:10px;font-size:18px;">
+Complete ERP System
+</p>
 
-renderAll();
-updateNotifUI();
-scheduleNotifications();
+<div class="trial">
+FREE 24-Hour Trial Included without any payment required.
+</div>
 
-// Auto-refresh badge counts every minute (for overdue detection)
-setInterval(() => renderAll(), 60000);
-</script>
+<p style="margin-bottom:25px;">
+Includes all ERP modules, future updates,
+analytics, inventory, finance, procurement,
+sales management, and audit logging.
+Payment are done securely.
+</p>
+
+<a href="#contact" class="btn btn-primary">
+Get Started
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+<div class="container">
+
+<div class="cta" id="contact">
+
+<h2>Need More Information?</h2>
+
+<p>
+Press the Contact button located in the bottom-right corner
+of this page to speak with us, request a demo,
+activate your free 24-hour trial,
+or purchase the complete ERP system for $59.99.
+</p>
+
+
+Contact Us
+</a>
+<h3>Kindely Click on the headphones icon down right</h3>
+</div>
+
+
+<footer>
+<p>
+© 2026 Powered by P&P • All Rights Reserved
+</p>
+</footer>
+
 </body>
 </html>

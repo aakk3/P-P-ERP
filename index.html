@@ -1,600 +1,164 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERP System - Complete Business Management</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/dist/tabler-icons.min.css">
-
+<title>P&P ERP System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:#fff;color:#0f172a;line-height:1.6}
 :root{
---blue:#2563eb;
---blue-dark:#1d4ed8;
---blue-light:#eff6ff;
---white:#ffffff;
---gray:#64748b;
---dark:#0f172a;
---border:#e2e8f0;
---bg:#f8fbff;
+--blue:#2563eb;--blue2:#1d4ed8;--light:#eff6ff;--border:#e2e8f0;
 }
-
-body{
-font-family:'Inter',sans-serif;
-background:var(--white);
-color:var(--dark);
-line-height:1.6;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:0 24px;
-}
-
-/* NAV */
-.login-btn{
-    display:inline-block;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:14px 28px;
-    border-radius:10px;
-    font-weight:600;
-    transition:0.2s;
-}
-
-.login-btn:hover{
-    background:#1d4ed8;
-    transform:translateY(-2px);
-}
-
-    
-
-<style>
-.btn-primary{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:14px 28px;
-    border-radius:12px;
-    font-weight:600;
-    box-shadow:0 8px 20px rgba(37,99,235,.25);
-    transition:.2s;
-}
-
-.btn-primary:hover{
-    background:#1d4ed8;
-    transform:translateY(-2px);
-}
-
-<style>
-.floating-login{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#2563eb;
-    color:#fff;
-    text-decoration:none;
-    padding:14px 22px;
-    border-radius:999px;
-    font-weight:600;
-    z-index:9999;
-    box-shadow:0 10px 25px rgba(37,99,235,.35);
-}
-
-.floating-login:hover{
-    background:#1d4ed8;
-}
-nav{
-position:sticky;
-top:0;
-z-index:1000;
-background:white;
-border-bottom:1px solid var(--border);
-}
-
-.nav-inner{
-height:72px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-
-.logo{
-font-size:22px;
-font-weight:800;
-color:var(--blue);
-text-decoration:none;
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.nav-links{
-display:flex;
-gap:28px;
-}
-
-.nav-links a{
-text-decoration:none;
-color:var(--gray);
-font-weight:500;
-}
-
-.nav-links a:hover{
-color:var(--blue);
-}
-
-.btn{
-display:inline-block;
-padding:12px 22px;
-border-radius:10px;
-font-weight:600;
-text-decoration:none;
-transition:.2s;
-}
-
-.btn-primary{
-background:var(--blue);
-color:white;
-}
-
-.btn-primary:hover{
-background:var(--blue-dark);
-}
-
-/* HERO */
-
-.hero{
-padding:100px 0;
-background:linear-gradient(180deg,#ffffff,#eff6ff);
-}
-
-.hero-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;
-}
-
-.badge{
-display:inline-block;
-padding:8px 14px;
-background:#dbeafe;
-color:var(--blue);
-font-weight:700;
-border-radius:999px;
-margin-bottom:20px;
-}
-
-.hero h1{
-font-size:58px;
-line-height:1.1;
-margin-bottom:20px;
-}
-
-.hero p{
-font-size:20px;
-color:var(--gray);
-margin-bottom:30px;
-}
-
-.hero-card{
-background:white;
-padding:35px;
-border-radius:24px;
-box-shadow:0 15px 40px rgba(37,99,235,.12);
-border:1px solid var(--border);
-}
-
-.hero-card h3{
-margin-bottom:20px;
-}
-
-.metric{
-display:flex;
-align-items:center;
-gap:12px;
-padding:15px 0;
-border-bottom:1px solid #edf2f7;
-}
-
-.metric:last-child{
-border:none;
-}
-
-.metric i{
-font-size:24px;
-color:var(--blue);
-}
-
-/* SECTION */
-
-section{
-padding:90px 0;
-}
-
-.section-title{
-text-align:center;
-margin-bottom:60px;
-}
-
-.section-title h2{
-font-size:42px;
-margin-bottom:12px;
-}
-
-.section-title p{
-color:var(--gray);
-max-width:700px;
-margin:auto;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.card{
-background:white;
-padding:28px;
-border-radius:18px;
-border:1px solid var(--border);
-transition:.25s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 30px rgba(37,99,235,.08);
-}
-
-.card i{
-font-size:34px;
-color:var(--blue);
-margin-bottom:16px;
-}
-
-.card h3{
-margin-bottom:10px;
-}
-
-/* PRICING */
-
-.pricing{
-background:var(--bg);
-}
-
-.price-card{
-max-width:500px;
-margin:auto;
-background:white;
-padding:45px;
-border-radius:24px;
-text-align:center;
-box-shadow:0 15px 40px rgba(37,99,235,.12);
-border:2px solid #dbeafe;
-}
-
-.price{
-font-size:72px;
-font-weight:800;
-color:var(--blue);
-line-height:1;
-}
-
-.price small{
-font-size:20px;
-}
-
-.trial{
-margin:20px 0;
-padding:14px;
-border-radius:12px;
-background:#dcfce7;
-color:#166534;
-font-weight:700;
-}
-
-/* CTA */
-
-.cta{
-background:linear-gradient(135deg,var(--blue),var(--blue-dark));
-color:white;
-text-align:center;
-border-radius:30px;
-padding:70px 40px;
-}
-
-.cta h2{
-font-size:42px;
-margin-bottom:15px;
-}
-
-.cta p{
-font-size:18px;
-opacity:.95;
-max-width:700px;
-margin:auto;
-margin-bottom:25px;
-}
-
-.cta .btn{
-background:white;
-color:var(--blue);
-}
-
-/* FOOTER */
-
-footer{
-padding:40px 0;
-text-align:center;
-color:var(--gray);
-border-top:1px solid var(--border);
-margin-top:80px;
-}
-
-/* MOBILE */
-
+.container{max-width:1280px;margin:auto;padding:0 24px}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:999}
+.nav{height:80px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:24px;color:var(--blue);text-decoration:none}
+.links a{text-decoration:none;color:#475569;margin-left:24px}
+.btn{display:inline-block;padding:14px 26px;border-radius:12px;text-decoration:none;font-weight:700}
+.btn-primary{background:var(--blue);color:#fff}
+.hero{padding:120px 0;background:linear-gradient(#fff,#eff6ff)}
+.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center}
+.hero h1{font-size:64px;line-height:1.05;margin:20px 0}
+.hero-card,.card,.price-card,.faq-item,.testimonial{background:#fff;border:1px solid var(--border);border-radius:20px}
+.hero-card{padding:32px;box-shadow:0 20px 50px rgba(0,0,0,.08)}
+section{padding:90px 0}
+.title{text-align:center;margin-bottom:50px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.card{padding:28px}
+.pricing{background:#f8fbff}
+.price-card{max-width:500px;margin:auto;padding:40px;text-align:center}
+.price{font-size:72px;font-weight:800;color:var(--blue)}
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.testimonial{padding:24px}
+.faq{max-width:900px;margin:auto}
+.faq-item{padding:24px;margin-bottom:16px}
+.cta{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border-radius:30px;padding:70px;text-align:center}
+footer{padding:40px;text-align:center;border-top:1px solid var(--border)}
 @media(max-width:900px){
-
-.hero-grid{
-grid-template-columns:1fr;
-}
-
-.hero h1{
-font-size:42px;
-}
-
-.nav-links{
-display:none;
-}
+.hero-grid{grid-template-columns:1fr}
+.hero h1{font-size:42px}
+.links{display:none}
 }
 </style>
-
 </head>
 <body>
 
 <nav>
-<div class="container nav-inner">
-
-<a href="#" class="logo">
-<i class="ti ti-building-skyscraper"></i>
-ERP System
-</a>
-
-<div class="nav-links">
+<div class="container nav">
+<a class="logo" href="#">P&P ERP</a>
+<div class="links">
 <a href="#features">Features</a>
 <a href="#modules">Modules</a>
 <a href="#pricing">Pricing</a>
-<a href="#contact">Contact</a>
+<a href="#faq">FAQ</a>
+<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn btn-primary">Login</a>
 </div>
 </div>
-</a>
-
-
 </nav>
 
 <section class="hero">
 <div class="container hero-grid">
-
 <div>
-<div class="badge">
-Enterprise Grade ERP Platform
+<span style="background:#dbeafe;color:#2563eb;padding:8px 14px;border-radius:999px;font-weight:700">Enterprise ERP Platform</span>
+<h1>Run Your Restaurant & Business From One Powerful System</h1>
+<p>POS, Kitchen Display, Inventory, Analytics, Audit Logs, Manager Dashboard, Owner Controls and Real-Time Reporting.</p>
+<br>
+<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn btn-primary">Start Free Trial</a>
 </div>
-
-<h1>Run Your Entire Business From One System</h1>
-
-<p>
-Manage finance, inventory, procurement, sales, analytics,
-audit logs, and operations from a single integrated platform.
-</p>
-
-<a href="#pricing" class="btn btn-primary">
-View Pricing
-</a>
-</div>
-
 <div class="hero-card">
-
-<h3>Everything Included</h3>
-
-<div class="metric">
-<i class="ti ti-report-money"></i>
-<div>
-<strong>Finance & Accounting</strong>
+<h2>Everything Included</h2>
+<ul style="padding-left:20px;margin-top:15px">
+<li>POS System</li>
+<li>Kitchen Management</li>
+<li>Owner Dashboard</li>
+<li>Manager Controls</li>
+<li>Analytics & KPIs</li>
+<li>Inventory Tracking</li>
+<li>Audit Logs</li>
+<li>Sales Reports</li>
+</ul>
 </div>
-</div>
-
-<div class="metric">
-<i class="ti ti-package"></i>
-<div>
-<strong>Inventory Management</strong>
-</div>
-</div>
-
-<div class="metric">
-<i class="ti ti-shopping-cart"></i>
-<div>
-<strong>Sales & Orders</strong>
-</div>
-</div>
-
-<div class="metric">
-<i class="ti ti-chart-bar"></i>
-<div>
-<strong>Analytics & KPIs</strong>
-</div>
-</div>
-
-</div>
-
 </div>
 </section>
 
 <section id="features">
 <div class="container">
-
-<div class="section-title">
-<h2>Why Businesses Choose Our ERP</h2>
-<p>
-Centralize operations, eliminate duplicate work,
-and gain real-time visibility across your organization.
-</p>
-</div>
-
+<div class="title"><h2>Features</h2></div>
 <div class="grid">
-
-<div class="card">
-<i class="ti ti-database"></i>
-<h3>Centralized Data</h3>
-<p>One source of truth across your company.</p>
+<div class="card"><h3>Centralized Data</h3><p>One source of truth.</p></div>
+<div class="card"><h3>Automation</h3><p>Reduce manual work.</p></div>
+<div class="card"><h3>Live Reporting</h3><p>Instant dashboards.</p></div>
+<div class="card"><h3>Security</h3><p>Enterprise-grade controls.</p></div>
+<div class="card"><h3>Inventory</h3><p>Track stock in real time.</p></div>
+<div class="card"><h3>Multi-Branch</h3><p>Manage all locations.</p></div>
 </div>
-
-<div class="card">
-<i class="ti ti-bolt"></i>
-<h3>Automation</h3>
-<p>Reduce manual work and streamline workflows.</p>
-</div>
-
-<div class="card">
-<i class="ti ti-chart-line"></i>
-<h3>Real-Time Insights</h3>
-<p>Track performance instantly with dashboards.</p>
-</div>
-
-<div class="card">
-<i class="ti ti-shield-lock"></i>
-<h3>Audit Logs</h3>
-<p>Every action is tracked for accountability.</p>
-</div>
-
-</div>
-
 </div>
 </section>
 
 <section id="modules">
 <div class="container">
-
-<div class="section-title">
-<h2>ERP Modules</h2>
-<p>
-Everything your business needs in one platform.
-</p>
-</div>
-
+<div class="title"><h2>ERP Modules</h2></div>
 <div class="grid">
-
-<div class="card">
-<h3>POS</h3>
-<p>Point of sale, connection with manager and admin.</p>
+<div class="card"><h3>POS</h3></div>
+<div class="card"><h3>Kitchen Display</h3></div>
+<div class="card"><h3>Manager Panel</h3></div>
+<div class="card"><h3>Owner Admin</h3></div>
+<div class="card"><h3>Audit Logs</h3></div>
+<div class="card"><h3>Reports</h3></div>
+<div class="card"><h3>Inventory</h3></div>
+<div class="card"><h3>Staff Management</h3></div>
 </div>
-
-
-
-<div class="card">
-<h3>Kitchen</h3>
-<p>Kitchen load equality.</p>
-</div>
-
-<div class="card">
-<h3>Admin</h3>
-<p>An account esspecially for the resturant owner.</p>
-</div>
-
-<div class="card">
-<h3>Manager</h3>
-<p>Has control to pos, kitchens.</p>
-</div>
-
-<div class="card">
-<h3>Audit Logs</h3>
-<p>Full activity history and compliance.</p>
-</div>
-
-</div>
-
 </div>
 </section>
 
 <section class="pricing" id="pricing">
-
 <div class="container">
-
-<div class="section-title">
-<h2>Simple Pricing</h2>
-<p>One price. Full access. No hidden fees.</p>
-</div>
-
 <div class="price-card">
-
-<div class="price">
-$59.99
+<h2>Premium Plan</h2>
+<div class="price">$59.99</div>
+<p>Complete ERP Access</p>
+<br>
+<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn btn-primary">Get Started</a>
 </div>
-
-<p style="margin-top:10px;font-size:18px;">
-Complete ERP System
-</p>
-
-<div class="trial">
-FREE 24-Hour Trial Included without any payment required.
 </div>
-
-<p style="margin-bottom:25px;">
-Includes all ERP modules, future updates,
-analytics, inventory, finance, procurement,
-sales management, and audit logging.
-Payment are done securely.
-</p>
-
-<a href="#contact" class="btn btn-primary">
-Get Started
-</a>
-
-</div>
-
-</div>
-
 </section>
 
 <section>
 <div class="container">
-
-<div class="cta" id="contact">
-
-<h2>Need More Information?</h2>
-
-<p>
-Press the Contact button located in the bottom-right corner
-of this page to speak with us, request a demo,
-activate your free 24-hour trial,
-or purchase the complete ERP system for $59.99.
-</p>
-
-
-Contact Us
-</a>
-<h3>Kindely Click on the headphones icon down right</h3>
+<div class="title"><h2>Testimonials</h2></div>
+<div class="testimonials">
+<div class="testimonial"><strong>Restaurant Owner</strong><p>Operations became significantly easier.</p></div>
+<div class="testimonial"><strong>Manager</strong><p>Kitchen and POS integration saved hours daily.</p></div>
+<div class="testimonial"><strong>Multi-Branch Chain</strong><p>Real-time reporting across all stores.</p></div>
 </div>
+</div>
+</section>
 
+<section id="faq">
+<div class="container">
+<div class="title"><h2>Frequently Asked Questions</h2></div>
+<div class="faq">
+<div class="faq-item"><h3>Is there a free trial?</h3><p>Yes, 24-hour free trial.</p></div>
+<div class="faq-item"><h3>Does it support restaurants?</h3><p>Yes, built for restaurant workflows.</p></div>
+<div class="faq-item"><h3>Can owners monitor remotely?</h3><p>Yes, through the admin dashboard.</p></div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="cta">
+<h2>Ready to Start?</h2>
+<p>Access the ERP platform today.</p>
+<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn" style="background:#fff;color:#2563eb">Login Now</a>
+</div>
+</div>
+</section>
 
 <footer>
-<p>
 © 2026 Powered by P&P • All Rights Reserved
-</p>
 </footer>
 
 </body>

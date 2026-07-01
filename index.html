@@ -4,162 +4,706 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>P&P ERP System</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="The culinary operating system for modern hospitality. POS, Kitchen Display, Inventory, Analytics, Audit Logs, Manager Dashboard, Owner Controls and Real-Time Reporting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Inter,sans-serif;background:#fff;color:#0f172a;line-height:1.6}
 :root{
---blue:#2563eb;--blue2:#1d4ed8;--light:#eff6ff;--border:#e2e8f0;
+  --bg:#ffffff;--fg:#0f172a;--muted:#64748b;--border:#e2e8f0;
+  --primary:#2563eb;--primary-dark:#1d4ed8;--secondary:#eff6ff;
+  --radius:0.5rem;
+  --font-heading:'Playfair Display',Georgia,serif;
+  --font-body:'Inter Tight',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
 }
-.container{max-width:1280px;margin:auto;padding:0 24px}
-nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:999}
-.nav{height:80px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:800;font-size:24px;color:var(--blue);text-decoration:none}
-.links a{text-decoration:none;color:#475569;margin-left:24px}
-.btn{display:inline-block;padding:14px 26px;border-radius:12px;text-decoration:none;font-weight:700}
-.btn-primary{background:var(--blue);color:#fff}
-.hero{padding:120px 0;background:linear-gradient(#fff,#eff6ff)}
-.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center}
-.hero h1{font-size:64px;line-height:1.05;margin:20px 0}
-.hero-card,.card,.price-card,.faq-item,.testimonial{background:#fff;border:1px solid var(--border);border-radius:20px}
-.hero-card{padding:32px;box-shadow:0 20px 50px rgba(0,0,0,.08)}
-section{padding:90px 0}
-.title{text-align:center;margin-bottom:50px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-.card{padding:28px}
-.pricing{background:#f8fbff}
-.price-card{max-width:500px;margin:auto;padding:40px;text-align:center}
-.price{font-size:72px;font-weight:800;color:var(--blue)}
-.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
-.testimonial{padding:24px}
-.faq{max-width:900px;margin:auto}
-.faq-item{padding:24px;margin-bottom:16px}
-.cta{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border-radius:30px;padding:70px;text-align:center}
-footer{padding:40px;text-align:center;border-top:1px solid var(--border)}
-@media(max-width:900px){
-.hero-grid{grid-template-columns:1fr}
-.hero h1{font-size:42px}
-.links{display:none}
-}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{display:block;max-width:100%}
+.mono-label{font-family:var(--font-mono);letter-spacing:0.15em;text-transform:uppercase}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+@media(min-width:1024px){.container{padding-left:80px}}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--secondary)}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+
+/* ===== Nav Rail ===== */
+.nav-rail{position:fixed;left:0;top:0;z-index:40;height:100%;width:48px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+@media(min-width:1024px){.nav-rail{display:flex}}
+.nav-rail-track{position:relative;height:256px;width:1px;background:var(--border)}
+.nav-rail-progress{position:absolute;left:0;top:0;width:1px;background:var(--primary);transition:height .3s ease}
+.nav-rail-item{position:absolute;left:-6px;display:flex;align-items:center;gap:12px;transition:all .3s}
+.nav-rail-dot{display:block;border-radius:9999px;transition:all .3s}
+.nav-rail-dot.active{height:12px;width:12px;background:var(--primary)}
+.nav-rail-dot.inactive{height:8px;width:8px;background:rgba(100,116,139,.4)}
+.nav-rail-item:hover .nav-rail-dot.inactive{background:rgba(37,99,235,.6)}
+.nav-rail-label{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;white-space:nowrap;transition:opacity .3s}
+.nav-rail-label.active{color:var(--primary);opacity:1}
+.nav-rail-label.inactive{color:var(--muted);opacity:0}
+.nav-rail-item:hover .nav-rail-label.inactive{opacity:1}
+
+/* ===== Top Nav ===== */
+nav.topnav{position:sticky;top:0;z-index:50;transition:all .3s}
+nav.topnav.scrolled{border-bottom:1px solid var(--border);background:rgba(255,255,255,.85);backdrop-filter:blur(16px)}
+.nav-inner{height:80px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:8px}
+.logo .pp{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+.logo .erp{font-family:var(--font-heading);font-size:24px;font-weight:700;letter-spacing:-0.02em;color:var(--fg)}
+.logo .sys{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
+.nav-links{display:none;align-items:center;gap:32px}
+.nav-links a{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--primary)}
+.nav-actions{display:none;align-items:center;gap:16px}
+.nav-signin{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--muted);transition:color .2s}
+.nav-signin:hover{color:var(--fg)}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9999px;background:var(--primary);color:#fff;padding:10px 24px;font-size:14px;font-weight:600;transition:all .2s}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 12px 30px rgba(37,99,235,.3)}
+.nav-toggle{display:block;padding:8px;border-radius:8px}
+@media(min-width:768px){.nav-links,.nav-actions{display:flex}.nav-toggle{display:none}}
+.mobile-menu{display:none;border-top:1px solid var(--border);background:var(--bg)}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:12px 24px;font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+.mobile-menu .btn-primary{margin:12px 24px;width:calc(100% - 48px)}
+
+/* ===== Hero ===== */
+.hero{position:relative;overflow:hidden;background:linear-gradient(to bottom,#fff,#fff,#eff6ff)}
+.hero-grid{display:grid;grid-template-columns:1fr;align-items:center;gap:48px;padding:64px 0}
+@media(min-width:1024px){.hero-grid{grid-template-columns:1.2fr 1fr;gap:80px;min-height:88vh;padding:96px 0}}
+.badge{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;border:1px solid var(--border);background:rgba(239,246,255,.5);padding:6px 14px}
+.badge .dot{height:6px;width:6px;border-radius:9999px;background:var(--primary);animation:pulse 2s infinite}
+.badge span{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--primary)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:var(--font-heading);font-weight:700;line-height:1.05;letter-spacing:-0.02em;margin-top:32px;font-size:48px}
+@media(min-width:640px){.hero h1{font-size:60px}}
+@media(min-width:1024px){.hero h1{font-size:72px}}
+@media(min-width:1280px){.hero h1{font-size:84px}}
+.hero h1 em{font-style:italic;color:var(--primary)}
+.hero p{margin-top:32px;max-width:36rem;font-size:18px;color:var(--muted)}
+@media(min-width:640px){.hero p{font-size:20px}}
+.hero-cta{margin-top:40px;display:flex;flex-direction:column;gap:16px}
+@media(min-width:640px){.hero-cta{flex-direction:row;align-items:center}}
+.hero-cta .btn-primary{padding:16px 32px}
+.hero-explore{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--muted);padding:0 16px;transition:color .2s}
+.hero-explore:hover{color:var(--fg)}
+.command-list{margin-top:64px}
+.command-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.command-head .label{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
+.command-head .line{height:1px;flex:1;background:var(--border)}
+.command-list ul{list-style:none}
+.command-list li button{display:flex;width:100%;align-items:center;gap:12px;padding:4px 0;text-align:left}
+.command-list li .num{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:rgba(100,116,139,.6)}
+.command-list li .txt{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--muted);transition:all .3s}
+.command-list li button:hover .txt,.command-list li .txt.lit{color:var(--primary)}
+.command-list li .fill{height:1px;flex:1;background:var(--border);transition:max-width .5s}
+.hero-img-wrap{position:relative}
+.hero-img-box{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--border);aspect-ratio:3/4}
+.hero-img-box img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.hero-img-box:hover img{transform:scale(1.05)}
+.hero-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,.4),transparent,transparent)}
+.hero-img-card{position:absolute;bottom:0;left:0;right:0;padding:24px}
+.hero-img-card-inner{border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(15,23,42,.6);backdrop-filter:blur(8px);padding:16px}
+.hero-img-card-inner .row{display:flex;align-items:center;justify-content:space-between}
+.hero-img-card-inner .l{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:rgba(255,255,255,.7)}
+.hero-img-card-inner .live{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:#fff}
+.hero-img-card-inner .station{margin-top:4px;font-family:var(--font-mono);font-size:12px;color:#fff}
+.hero-stat{position:absolute;left:-16px;top:32px;display:none;border-radius:12px;border:1px solid var(--border);background:var(--bg);padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.08)}
+@media(min-width:1024px){.hero-stat{display:block}}
+.hero-stat .l{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)}
+.hero-stat .v{font-family:var(--font-heading);font-size:24px;font-weight:700;color:var(--fg)}
+.data-strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,.5)}
+.data-strip-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:16px 0}
+.data-strip-item{display:flex;align-items:baseline;gap:8px}
+.data-strip-item .v{font-family:var(--font-heading);font-size:20px;font-weight:700;color:var(--fg)}
+.data-strip-item .l{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)}
+
+/* ===== Section base ===== */
+section.block{padding:96px 0}
+@media(min-width:1024px){section.block{padding:128px 0}}
+.section-head{margin-bottom:64px;max-width:42rem}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.section-tag{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--primary);margin-bottom:16px;display:block}
+.section-head h2{font-family:var(--font-heading);font-weight:700;letter-spacing:-0.02em;font-size:40px;line-height:1.1}
+@media(min-width:640px){.section-head h2{font-size:48px}}
+@media(min-width:1024px){.section-head h2{font-size:56px}}
+.section-head h2 em{font-style:italic;color:var(--primary)}
+.section-head p{margin-top:16px;font-size:18px;color:var(--muted)}
+
+/* ===== Features ===== */
+.features-grid{display:grid;grid-template-columns:1fr;gap:1px;overflow:hidden;border-radius:16px;border:1px solid var(--border);background:var(--border)}
+@media(min-width:640px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.features-grid{grid-template-columns:repeat(3,1fr)}}
+.feature-card{background:var(--bg);padding:32px;transition:background .3s}
+.feature-card:hover{background:rgba(239,246,255,.3)}
+.feature-card .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.feature-icon{display:flex;align-items:center;justify-content:center;height:48px;width:48px;border-radius:12px;border:1px solid var(--border);background:rgba(239,246,255,.5);color:var(--primary);transition:all .3s}
+.feature-card:hover .feature-icon{background:var(--primary);color:#fff;border-color:var(--primary)}
+.feature-icon svg{width:22px;height:22px}
+.feature-tag{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)}
+.feature-card h3{font-family:var(--font-heading);font-size:24px;font-weight:600}
+.feature-card p{margin-top:12px;font-size:14px;color:var(--muted)}
+.feature-underline{margin-top:24px;height:1px;width:0;background:var(--primary);transition:width .5s}
+.feature-card:hover .feature-underline{width:100%}
+
+/* ===== Modules ===== */
+.modules{background:rgba(239,246,255,.3)}
+.modules-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.modules-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.modules-grid{grid-template-columns:repeat(4,1fr)}}
+.module-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;overflow:hidden;border-radius:16px;border:1px solid var(--border);background:var(--bg);padding:24px;text-align:left;transition:all .3s}
+.module-card:hover{border-color:rgba(37,99,235,.4)}
+.module-card.open{border-color:var(--primary);box-shadow:0 25px 50px rgba(37,99,235,.1)}
+@media(min-width:768px){.module-card.open{grid-row:span 2}}
+.module-card .top{display:flex;width:100%;align-items:center;justify-content:space-between;margin-bottom:16px}
+.module-icon{display:flex;align-items:center;justify-content:center;height:44px;width:44px;border-radius:12px;border:1px solid var(--border);background:rgba(239,246,255,.5);color:var(--primary);transition:all .3s}
+.module-card.open .module-icon{background:var(--primary);color:#fff;border-color:var(--primary)}
+.module-icon svg{width:20px;height:20px}
+.module-num{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)}
+.module-card h3{font-family:var(--font-heading);font-size:20px;font-weight:600}
+.module-expand-body{display:grid;grid-template-rows:0fr;opacity:0;transition:all .5s}
+.module-card.open .module-expand-body{grid-template-rows:1fr;opacity:1;margin-top:12px}
+.module-expand-inner{overflow:hidden}
+.module-expand-inner p{font-size:14px;color:var(--muted)}
+.module-metrics{margin-top:16px;list-style:none;display:flex;flex-direction:column;gap:8px}
+.module-metrics li{display:flex;align-items:center;gap:8px}
+.module-metrics li .d{height:4px;width:4px;border-radius:9999px;background:var(--primary)}
+.module-metrics li .t{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)}
+.module-hint{margin-top:12px;display:flex;align-items:center;gap:4px;font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted);transition:color .2s}
+.module-card:hover .module-hint{color:var(--primary)}
+.module-hint svg{width:12px;height:12px}
+.module-card.open .module-hint{display:none}
+
+/* ===== Pricing ===== */
+.price-wrap{max-width:42rem;margin:0 auto}
+.price-card{overflow:hidden;border-radius:24px;border:1px solid var(--border);background:rgba(239,246,255,.3);box-shadow:0 40px 80px rgba(37,99,235,.05)}
+.price-card-inner{padding:40px}
+@media(min-width:1024px){.price-card-inner{padding:48px}}
+.price-badge{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;background:rgba(37,99,235,.1);padding:6px 16px;margin-bottom:32px}
+.price-badge .d{height:6px;width:6px;border-radius:9999px;background:var(--primary)}
+.price-badge .t{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--primary)}
+.price-amt{display:flex;align-items:baseline;gap:8px}
+.price-amt .dollar{font-family:var(--font-heading);font-size:72px;font-weight:700;color:var(--primary)}
+@media(min-width:1024px){.price-amt .dollar{font-size:80px}}
+.price-amt .cents{font-family:var(--font-heading);font-size:30px;font-weight:600;color:var(--muted)}
+.price-per{margin-top:8px;font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
+.price-list{margin-top:40px;list-style:none;display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.price-list{grid-template-columns:repeat(2,1fr);column-gap:24px}}
+.price-list li{display:flex;align-items:flex-start;gap:8px}
+.price-list li svg{width:14px;height:14px;margin-top:4px;flex-shrink:0;color:var(--primary)}
+.price-list li span{font-size:14px;color:var(--fg)}
+.price-cta{margin-top:40px;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--primary);color:#fff;padding:16px 32px;font-size:14px;font-weight:600;transition:all .2s}
+.price-cta:hover{background:var(--primary-dark);box-shadow:0 20px 40px rgba(37,99,235,.3)}
+
+/* ===== Testimonials ===== */
+.testimonials{background:rgba(239,246,255,.3)}
+.test-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:768px){.test-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.test-grid{grid-template-columns:repeat(3,1fr)}}
+.test-card{display:flex;flex-direction:column;justify-content:space-between;border-radius:16px;border:1px solid var(--border);background:var(--bg);padding:32px;transition:all .3s}
+.test-card:hover{border-color:rgba(37,99,235,.4);box-shadow:0 20px 50px rgba(37,99,235,.05)}
+.test-stars{display:flex;gap:4px;margin-bottom:20px}
+.test-stars svg{width:14px;height:14px;fill:var(--primary);color:var(--primary)}
+.test-quote{font-family:var(--font-heading);font-size:20px;font-weight:500;line-height:1.5}
+.test-fig{margin-top:32px;border-top:1px solid var(--border);padding-top:20px}
+.test-name{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:12px;color:var(--fg)}
+.test-role{margin-top:4px;display:flex;align-items:center;gap:8px}
+.test-role .r{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--primary)}
+.test-role .l{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:48rem;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);transition:background .3s}
+.faq-item.open{background:rgba(239,246,255,.3)}
+.faq-q{display:flex;width:100%;align-items:center;justify-content:space-between;gap:16px;padding:24px 0;text-align:left}
+.faq-q .left{display:flex;align-items:center;gap:16px}
+.faq-num{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
+.faq-q .q{font-family:var(--font-heading);font-size:20px;font-weight:600}
+.faq-toggle{display:flex;align-items:center;justify-content:center;height:32px;width:32px;flex-shrink:0;border-radius:9999px;border:1px solid var(--border);transition:all .3s;color:var(--muted)}
+.faq-item.open .faq-toggle{border-color:var(--primary);background:var(--primary);color:#fff}
+.faq-toggle svg{width:14px;height:14px}
+.faq-body{display:grid;grid-template-rows:0fr;opacity:0;transition:all .3s}
+.faq-item.open .faq-body{grid-template-rows:1fr;opacity:1;padding-bottom:24px}
+.faq-body-inner{overflow:hidden}
+.faq-body-inner p{padding-left:40px;font-size:16px;color:var(--muted)}
+
+/* ===== Command Entry ===== */
+.cmd-entry{padding:96px 0}
+@media(min-width:1024px){.cmd-entry{padding:128px 0}}
+.cmd-box{overflow:hidden;border-radius:24px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));padding:48px}
+@media(min-width:1024px){.cmd-box{padding:64px}}
+.cmd-grid{display:grid;grid-template-columns:1fr;align-items:center;gap:48px}
+@media(min-width:1024px){.cmd-grid{grid-template-columns:1fr 1fr}}
+.cmd-badge{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;background:rgba(255,255,255,.1);backdrop-filter:blur(4px);padding:6px 16px;margin-bottom:24px}
+.cmd-badge svg{width:12px;height:12px;color:#fff}
+.cmd-badge .t{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:#fff}
+.cmd-box h2{font-family:var(--font-heading);font-size:40px;font-weight:700;line-height:1.1;color:#fff}
+@media(min-width:640px){.cmd-box h2{font-size:48px}}
+@media(min-width:1024px){.cmd-box h2{font-size:56px}}
+.cmd-box p{margin-top:16px;max-width:28rem;font-size:18px;color:rgba(255,255,255,.8)}
+.cmd-btn{margin-top:32px;display:inline-flex;align-items:center;gap:8px;border-radius:9999px;background:#fff;color:var(--primary);padding:16px 32px;font-size:14px;font-weight:600;transition:all .2s}
+.cmd-btn:hover{box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.cmd-btn svg{width:16px;height:16px;transition:transform .2s}
+.cmd-btn:hover svg{transform:translateX(4px)}
+.terminal{border-radius:16px;border:1px solid rgba(255,255,255,.15);background:rgba(15,23,42,.4);backdrop-filter:blur(8px);padding:24px}
+.terminal-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.terminal-bar .d{height:12px;width:12px;border-radius:9999px}
+.term-line{font-family:var(--font-mono);font-size:14px;color:rgba(255,255,255,.9);margin-top:8px;display:flex;align-items:center}
+.term-cursor{margin-left:2px;height:16px;width:8px;background:rgba(255,255,255,.7);animation:blink 1s step-end infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+/* ===== Footer ===== */
+.ticker{overflow:hidden;border-bottom:1px solid var(--border);background:rgba(239,246,255,.3);padding:12px 0}
+.ticker-track{display:flex;width:max-content;gap:48px;animation:ticker 30s linear infinite}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-33.33%)}}
+.ticker-item{display:flex;align-items:center;gap:8px}
+.ticker-item .d{height:6px;width:6px;border-radius:9999px;background:#22c55e}
+.ticker-item .t{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted);white-space:nowrap}
+.footer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;padding:64px 0}
+@media(min-width:768px){.footer-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1024px){.footer-grid{grid-template-columns:repeat(5,1fr)}}
+.footer-brand{grid-column:span 2}
+.footer-brand .logo .erp{font-size:24px}
+.footer-brand p{margin-top:16px;max-width:20rem;font-size:14px;color:var(--muted)}
+.footer-clock{margin-top:24px;display:flex;align-items:center;gap:12px}
+.footer-clock .d{height:8px;width:8px;border-radius:9999px;background:#22c55e;animation:pulse 2s infinite}
+.footer-clock .t{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
+.footer-col h4{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--primary);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col a{font-size:14px;color:var(--muted);transition:color .2s}
+.footer-col a:hover{color:var(--fg)}
+.footer-bottom{border-top:1px solid var(--border);padding:24px 0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:16px}
+@media(min-width:640px){.footer-bottom{flex-direction:row}}
+.footer-bottom p{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
 </style>
 </head>
 <body>
 
-<nav>
-<div class="container nav">
-<a class="logo" href="#">P&P ERP</a>
-<div class="links">
-<a href="#features">Features</a>
-<a href="#modules">Modules</a>
-<a href="#pricing">Pricing</a>
-<a href="#faq">FAQ</a>
-<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn btn-primary">Login</a>
+<!-- Nav Rail -->
+<div class="nav-rail">
+  <div class="nav-rail-track">
+    <div class="nav-rail-progress" id="railProgress"></div>
+    <a href="#hero" class="nav-rail-item" data-sec="hero" style="top:0">
+      <span class="nav-rail-dot active"></span><span class="nav-rail-label active">Overview</span>
+    </a>
+    <a href="#features" class="nav-rail-item" data-sec="features" style="top:51px">
+      <span class="nav-rail-dot inactive"></span><span class="nav-rail-label inactive">Features</span>
+    </a>
+    <a href="#modules" class="nav-rail-item" data-sec="modules" style="top:102px">
+      <span class="nav-rail-dot inactive"></span><span class="nav-rail-label inactive">Modules</span>
+    </a>
+    <a href="#pricing" class="nav-rail-item" data-sec="pricing" style="top:153px">
+      <span class="nav-rail-dot inactive"></span><span class="nav-rail-label inactive">Pricing</span>
+    </a>
+    <a href="#testimonials" class="nav-rail-item" data-sec="testimonials" style="top:204px">
+      <span class="nav-rail-dot inactive"></span><span class="nav-rail-label inactive">Proof</span>
+    </a>
+    <a href="#faq" class="nav-rail-item" data-sec="faq" style="top:255px">
+      <span class="nav-rail-dot inactive"></span><span class="nav-rail-label inactive">FAQ</span>
+    </a>
+  </div>
 </div>
-</div>
+
+<!-- Top Nav -->
+<nav class="topnav" id="topnav">
+  <div class="container nav-inner">
+    <a href="#hero" class="logo">
+      <span class="pp">P&amp;P</span>
+      <span class="erp">ERP</span>
+      <span class="sys">/ SYSTEM</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#modules">Modules</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#testimonials">Proof</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://kitchen-batch-buddy.lovable.app/login" class="nav-signin">Sign In</a>
+      <a href="https://kitchen-batch-buddy.lovable.app/login" class="btn-primary">Start Free Trial</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features">Features</a>
+    <a href="#modules">Modules</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Proof</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://kitchen-batch-buddy.lovable.app/login" class="btn-primary">Start Free Trial</a>
+  </div>
 </nav>
 
-<section class="hero">
-<div class="container hero-grid">
-<div>
-<span style="background:#dbeafe;color:#2563eb;padding:8px 14px;border-radius:999px;font-weight:700">Enterprise ERP Platform</span>
-<h1>Run Your Restaurant & Business From One Powerful System</h1>
-<p>POS, Kitchen Display, Inventory, Analytics, Audit Logs, Manager Dashboard, Owner Controls and Real-Time Reporting.</p>
-<br>
-<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn btn-primary">Start Free Trial</a>
-</div>
-<div class="hero-card">
-<h2>Everything Included</h2>
-<ul style="padding-left:20px;margin-top:15px">
-<li>POS System</li>
-<li>Kitchen Management</li>
-<li>Owner Dashboard</li>
-<li>Manager Controls</li>
-<li>Analytics & KPIs</li>
-<li>Inventory Tracking</li>
-<li>Audit Logs</li>
-<li>Sales Reports</li>
-</ul>
-</div>
-</div>
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge"><span class="dot"></span><span>Enterprise ERP Platform</span></div>
+      <h1>Run Your Restaurant From One <em>Powerful</em> System</h1>
+      <p>POS, Kitchen Display, Inventory, Analytics, Audit Logs, Manager Dashboard, Owner Controls and Real-Time Reporting — the complete operating system for modern hospitality.</p>
+      <div class="hero-cta">
+        <a href="https://kitchen-batch-buddy.lovable.app/login" class="btn-primary">
+          Start Free Trial
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#features" class="hero-explore">Explore Modules ↓</a>
+      </div>
+      <div class="command-list">
+        <div class="command-head"><span class="label">System.Load</span><span class="line"></span></div>
+        <ul id="commandList"></ul>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <div class="hero-img-box">
+        <img src="https://media.base44.com/images/public/6a44e05204afe7e850296dab/7d74ca98d_generated_image.png" alt="Professional chef station mise-en-place">
+        <div class="hero-img-overlay"></div>
+        <div class="hero-img-card">
+          <div class="hero-img-card-inner">
+            <div class="row"><span class="l">Mise-en-Place</span><span class="live">● LIVE</span></div>
+            <div class="station">Station 01 — Ready</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="l">Uptime</div>
+        <div class="v">99.9%</div>
+      </div>
+    </div>
+  </div>
+  <div class="data-strip">
+    <div class="container data-strip-inner">
+      <div class="data-strip-item"><span class="v">24h</span><span class="l">Free Trial</span></div>
+      <div class="data-strip-item"><span class="v">8</span><span class="l">ERP Modules</span></div>
+      <div class="data-strip-item"><span class="v">99.9%</span><span class="l">Uptime SLA</span></div>
+      <div class="data-strip-item"><span class="v">∞</span><span class="l">Transactions</span></div>
+      <div class="data-strip-item"><span class="v">256-bit</span><span class="l">Encryption</span></div>
+    </div>
+  </div>
 </section>
 
-<section id="features">
-<div class="container">
-<div class="title"><h2>Features</h2></div>
-<div class="grid">
-<div class="card"><h3>Centralized Data</h3><p>One source of truth.</p></div>
-<div class="card"><h3>Automation</h3><p>Reduce manual work.</p></div>
-<div class="card"><h3>Live Reporting</h3><p>Instant dashboards.</p></div>
-<div class="card"><h3>Security</h3><p>Enterprise-grade controls.</p></div>
-<div class="card"><h3>Inventory</h3><p>Track stock in real time.</p></div>
-<div class="card"><h3>Multi-Branch</h3><p>Manage all locations.</p></div>
-</div>
-</div>
+<!-- Features -->
+<section class="block" id="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">§ Features</span>
+      <h2>The Architecture of <em>Control</em></h2>
+      <p>Every capability is engineered to eliminate friction between the pass, the floor, and the back office.</p>
+    </div>
+    <div class="features-grid" id="featuresGrid"></div>
+  </div>
 </section>
 
-<section id="modules">
-<div class="container">
-<div class="title"><h2>ERP Modules</h2></div>
-<div class="grid">
-<div class="card"><h3>POS</h3></div>
-<div class="card"><h3>Kitchen Display</h3></div>
-<div class="card"><h3>Manager Panel</h3></div>
-<div class="card"><h3>Owner Admin</h3></div>
-<div class="card"><h3>Audit Logs</h3></div>
-<div class="card"><h3>Reports</h3></div>
-<div class="card"><h3>Inventory</h3></div>
-<div class="card"><h3>Staff Management</h3></div>
-</div>
-</div>
+<!-- Modules -->
+<section class="block modules" id="modules">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">§ Modules</span>
+      <h2>The Module <em>Lattice</em></h2>
+      <p>Eight interconnected modules. Select any to reveal the workflow beneath.</p>
+    </div>
+    <div class="modules-grid" id="modulesGrid"></div>
+  </div>
 </section>
 
-<section class="pricing" id="pricing">
-<div class="container">
-<div class="price-card">
-<h2>Premium Plan</h2>
-<div class="price">$59.99</div>
-<p>Complete ERP Access</p>
-<br>
-<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn btn-primary">Get Started</a>
-</div>
-</div>
+<!-- Pricing -->
+<section class="block" id="pricing">
+  <div class="container">
+    <div class="section-head center">
+      <span class="section-tag">§ Pricing / ROI</span>
+      <h2>The Revenue <em>Prism</em></h2>
+      <p>Everything included. One transparent price.</p>
+    </div>
+    <div class="price-wrap">
+      <div class="price-card">
+        <div class="price-card-inner">
+          <div class="price-badge"><span class="d"></span><span class="t">Premium Plan</span></div>
+          <div class="price-amt"><span class="dollar">$59</span><span class="cents">.99</span></div>
+          <div class="price-per">/ month · per location</div>
+          <ul class="price-list" id="priceList"></ul>
+          <a href="https://kitchen-batch-buddy.lovable.app/login" class="price-cta">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-<div class="container">
-<div class="title"><h2>Testimonials</h2></div>
-<div class="testimonials">
-<div class="testimonial"><strong>Restaurant Owner</strong><p>Operations became significantly easier.</p></div>
-<div class="testimonial"><strong>Manager</strong><p>Kitchen and POS integration saved hours daily.</p></div>
-<div class="testimonial"><strong>Multi-Branch Chain</strong><p>Real-time reporting across all stores.</p></div>
-</div>
-</div>
+<!-- Testimonials -->
+<section class="block testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">§ Social Proof</span>
+      <h2>Trusted in the <em>Trenches</em></h2>
+      <p>Operators who moved from chaos to command center.</p>
+    </div>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
 </section>
 
-<section id="faq">
-<div class="container">
-<div class="title"><h2>Frequently Asked Questions</h2></div>
-<div class="faq">
-<div class="faq-item"><h3>Is there a free trial?</h3><p>Yes, 24-hour free trial.</p></div>
-<div class="faq-item"><h3>Does it support restaurants?</h3><p>Yes, built for restaurant workflows.</p></div>
-<div class="faq-item"><h3>Can owners monitor remotely?</h3><p>Yes, through the admin dashboard.</p></div>
-</div>
-</div>
+<!-- FAQ -->
+<section class="block" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">§ FAQ</span>
+      <h2>Frequently <em>Asked</em></h2>
+      <p>Answers to the questions operators ask before going live.</p>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
 </section>
 
-<section>
-<div class="container">
-<div class="cta">
-<h2>Ready to Start?</h2>
-<p>Access the ERP platform today.</p>
-<a href="https://kitchen-batch-buddy.lovable.app/login" class="btn" style="background:#fff;color:#2563eb">Login Now</a>
-</div>
-</div>
+<!-- Command Entry -->
+<section class="cmd-entry">
+  <div class="container">
+    <div class="cmd-box">
+      <div class="cmd-grid">
+        <div>
+          <div class="cmd-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <span class="t">Command Entry</span>
+          </div>
+          <h2>Ready to Start?</h2>
+          <p>Boot up your operation. Access the full P&P ERP platform today and transform the way your business runs.</p>
+          <a href="https://kitchen-batch-buddy.lovable.app/login" class="cmd-btn">
+            Login Now
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="d" style="background:#f87171"></span>
+            <span class="d" style="background:#facc15"></span>
+            <span class="d" style="background:#4ade80"></span>
+          </div>
+          <div class="term-line"><span style="color:rgba(255,255,255,.5)">$&nbsp;</span>START SYSTEM_</div>
+          <div class="term-line" style="color:rgba(255,255,255,.5)">↳ Booting P&P ERP v2.6.1...</div>
+          <div class="term-line" style="color:#86efac">↳ &gt; Modules loaded: 8/8 ✓</div>
+          <div class="term-line" style="color:#86efac">↳ &gt; Database synced ✓</div>
+          <div class="term-line" style="color:rgba(255,255,255,.5)">↳ Running command:</div>
+          <div class="term-line"><span style="color:rgba(255,255,255,.5)">$&nbsp;</span><span id="termTyped"></span><span class="term-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- Footer -->
 <footer>
-© 2026 Powered by P&P • All Rights Reserved
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="logo"><span class="pp">P&amp;P</span><span class="erp">ERP</span></a>
+        <p>The culinary operating system for modern hospitality. Run your entire business from one powerful, auditable platform.</p>
+        <div class="footer-clock"><span class="d"></span><span class="t">Closing Shift — <span id="clock"></span></span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#modules">Modules</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#hero">About</a></li>
+          <li><a href="mailto:hello@pnp-erp.com">Contact</a></li>
+          <li><a href="#faq">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#features">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Access</h4>
+        <a href="https://kitchen-batch-buddy.lovable.app/login" class="btn-primary">Start Free Trial</a>
+        <p style="margin-top:12px;font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)">24h trial · No card required</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Powered by P&amp;P • All Rights Reserved</p>
+      <p>Built for hospitality operators worldwide</p>
+    </div>
+  </div>
 </footer>
 
+<script>
+const LOGIN_URL = "https://kitchen-batch-buddy.lovable.app/login";
+
+// ===== Icons (inline SVG) =====
+const ICONS = {
+  database:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>',
+  cog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 .3 1.4l1.6 1a1 1 0 0 0 1.4-.3 3.5 3.5 0 1 1 0 4.2 1 1 0 0 0-1.4-.3l-1.6 1a1 1 0 0 0-.3 1.4 3.5 3.5 0 1 1-4.2 0 1 1 0 0 0-.3-1.4l-1.6-1a1 1 0 0 0-1.4.3 3.5 3.5 0 1 1 0-4.2 1 1 0 0 0 1.4.3l1.6-1a1 1 0 0 0 .3-1.4 3.5 3.5 0 1 1 4.2 0z"/><circle cx="12" cy="12" r="3"/></svg>',
+  bar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  boxes:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 21V12l-4.97-2.97a2 2 0 0 0-2.06 0z"/><path d="M7 17h.01"/><path d="M12 12l4.97 2.97a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0L12 7"/></svg>',
+  cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>',
+  monitor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  crown:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>',
+  file:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+  usercog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="15" r="3"/><circle cx="6" cy="7" r="3"/><path d="M6 21v-3a4 4 0 0 1 4-4h4"/><path d="M15.5 6.5l1-1.2a3 3 0 0 1 3.4 0l1 1.2"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  minus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  chevron:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'
+};
+
+// ===== Command List =====
+const COMMAND_LIST = ["POS — Point of Sale","Kitchen Display System","Owner Dashboard","Manager Controls","Analytics & KPIs","Inventory Tracking","Audit Logs","Sales Reports","Staff Management","Multi-Branch Sync"];
+const cl = document.getElementById('commandList');
+COMMAND_LIST.forEach((item,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML='<button><span class="num">'+String(i+1).padStart(2,'0')+'</span><span class="txt">'+item+'</span><span class="fill"></span></button>';
+  cl.appendChild(li);
+});
+let litCount=0;
+setInterval(()=>{litCount=litCount>=COMMAND_LIST.length?0:litCount+1;
+  const items=cl.querySelectorAll('li');
+  items.forEach((li,i)=>{const f=li.querySelector('.fill');if(i<litCount){li.querySelector('.txt').classList.add('lit');f.style.maxWidth='100%';}else{li.querySelector('.txt').classList.remove('lit');f.style.maxWidth='0';}});
+},600);
+
+// ===== Features =====
+const FEATURES=[
+  {icon:ICONS.database,title:"Centralized Data",desc:"One source of truth across every location. Sales, inventory, staff and menus unified in a single ledger.",tag:"01 / Data"},
+  {icon:ICONS.cog,title:"Automation",desc:"Reduce manual work with smart workflows — auto-sync stock, schedule staff, generate end-of-shift reports.",tag:"02 / Ops"},
+  {icon:ICONS.bar,title:"Live Reporting",desc:"Instant dashboards with real-time KPIs. Watch revenue, covers, and kitchen performance as they happen.",tag:"03 / Insight"},
+  {icon:ICONS.shield,title:"Security",desc:"Enterprise-grade access controls, role-based permissions, and full audit trails on every action taken.",tag:"04 / Trust"},
+  {icon:ICONS.boxes,title:"Inventory",desc:"Track stock in real time with automatic low-stock alerts, waste logging, and supplier reorder triggers.",tag:"05 / Stock"}
+];
+const fg=document.getElementById('featuresGrid');
+FEATURES.forEach(f=>{
+  const d=document.createElement('div');d.className='feature-card';
+  d.innerHTML='<div class="top"><div class="feature-icon">'+f.icon+'</div><span class="feature-tag">'+f.tag+'</span></div><h3>'+f.title+'</h3><p>'+f.desc+'</p><div class="feature-underline"></div>';
+  fg.appendChild(d);
+});
+
+// ===== Modules =====
+const MODULES=[
+  {icon:ICONS.cart,name:"POS",desc:"Lightning-fast cloud-based point of sale with table management, split billing, and modifiers. Access from any device, anytime.",metrics:["0.3s avg ticket","Cloud-based","Split payments"]},
+  {icon:ICONS.monitor,name:"Kitchen Display",desc:"Digital order rail with route-to-station, prep timers, and allergy alerts. Tickets flow from POS to kitchen in real time.",metrics:["Route by station","Prep timers","Allergy flags"]},
+  {icon:ICONS.usercog,name:"Manager Panel",desc:"Shift scheduling, void approvals, discount controls, and live floor view. Everything a manager needs during service.",metrics:["Shift scheduling","Void approvals","Live floor view"]},
+  {icon:ICONS.crown,name:"Owner Admin",desc:"Remote oversight of all branches with financial controls, menu publishing, and role management from anywhere.",metrics:["Remote access","Menu publishing","Role management"]},
+  {icon:ICONS.file,name:"Audit Logs",desc:"Immutable record of every action — who, what, when. Full transparency for compliance and dispute resolution.",metrics:["Immutable","User-tracked","Exportable"]},
+  {icon:ICONS.bar,name:"Analytics",desc:"Sales, menu performance, and KPI analytics with real-time dashboards. Schedule automated daily insights to your inbox.",metrics:["Real-time dashboards","Auto-delivery","Custom periods"]},
+  {icon:ICONS.boxes,name:"Inventory",desc:"Real-time stock levels with recipe-linked deduction, low-stock alerts, and supplier reorder points.",metrics:["Recipe deduction","Low-stock alerts","Auto-reorder"]},
+  {icon:ICONS.users,name:"Staff Management",desc:"Role permissions, performance KPIs, and payroll export. Build the team that runs the service.",metrics:["Role permissions","Payroll export","Perf. KPIs"]}
+];
+const mg=document.getElementById('modulesGrid');
+MODULES.forEach((m,i)=>{
+  const b=document.createElement('button');b.className='module-card';b.dataset.idx=i;
+  b.innerHTML='<div class="top"><div class="module-icon">'+m.icon+'</div><span class="module-num">'+String(i+1).padStart(2,'0')+'</span></div><h3>'+m.name+'</h3><div class="module-expand-body"><div class="module-expand-inner"><p>'+m.desc+'</p><ul class="module-metrics">'+m.metrics.map(x=>'<li><span class="d"></span><span class="t">'+x+'</span></li>').join('')+'</ul></div></div><div class="module-hint">Expand '+ICONS.chevron+'</div>';
+  b.addEventListener('click',()=>{
+    const open=b.classList.contains('open');
+    document.querySelectorAll('.module-card').forEach(c=>c.classList.remove('open'));
+    if(!open)b.classList.add('open');
+  });
+  if(i===0)b.classList.add('open');
+  mg.appendChild(b);
+});
+
+// ===== Pricing =====
+const INCLUDED=["Complete ERP Access","Cloud-Based POS System","Kitchen Display System","2 POS Users (3rd: $9.99/mo)","2 Kitchen Users (3rd: $9.99/mo)","1 Manager User (2nd: $14.99/mo)","1 Admin User (2nd: $14.99/mo)","Analytics & KPIs","Inventory Tracking","Audit Logs","Multi-Branch Sync","Staff Management","24/7 Support","24-hour Free Trial"];
+const pl=document.getElementById('priceList');
+INCLUDED.forEach(item=>{const li=document.createElement('li');li.innerHTML=ICONS.check+'<span>'+item+'</span>';pl.appendChild(li);});
+
+// ===== Testimonials =====
+const TESTS=[
+  {quote:"Operations became significantly easier. Our managers now spend their time on the floor, not buried in spreadsheets at the end of every shift.",name:"Marcus H.",role:"Restaurant Owner",loc:"Bistro Voltaire · NYC"},
+  {quote:"Kitchen and POS integration saved hours daily. Orders flow seamlessly and ticket errors have dropped to nearly zero during peak service.",name:"Elena R.",role:"Manager",loc:"Trattoria Sole · Boston"},
+  {quote:"Real-time reporting across all stores changed how we operate. I can compare branch performance from my phone before my morning coffee.",name:"James K.",role:"Multi-Branch Chain",loc:"Pacific Group · 12 locations"}
+];
+const tg=document.getElementById('testGrid');
+TESTS.forEach(t=>{
+  const f=document.createElement('figure');f.className='test-card';
+  f.innerHTML='<div><div class="test-stars">'+ICONS.star+ICONS.star+ICONS.star+ICONS.star+ICONS.star+'</div><blockquote class="test-quote">'+t.quote+'</blockquote></div><figcaption class="test-fig"><div class="test-name">'+t.name+'</div><div class="test-role"><span class="r">'+t.role+'</span><span class="l">· '+t.loc+'</span></div></figcaption>';
+  tg.appendChild(f);
+});
+
+// ===== FAQ =====
+const FAQS=[
+  {q:"Is there a free trial?",a:"Yes — every plan includes a 24-hour free trial with full access to all modules. No credit card required to start. You can explore POS, Kitchen Display, Inventory, and every dashboard before committing."},
+  {q:"Does it support restaurants?",a:"Absolutely. P&P ERP was built specifically for restaurant workflows — from table-side POS and kitchen display routing to recipe-linked inventory deduction and shift-based staff scheduling. Every module speaks the language of hospitality."},
+  {q:"Can owners monitor remotely?",a:"Yes. The Owner Admin dashboard gives you complete remote oversight of all branches. Compare performance, push menu updates, manage roles, and view financial reports from any device, anywhere in the world."},
+  {q:"How does multi-branch syncing work?",a:"All locations share a single centralized database. Menu changes, pricing updates, and role configurations push to every branch instantly. Sales and inventory data flows back to a unified dashboard for comparison and reporting."},
+  {q:"What about security and audit trails?",a:"Every action — voids, discounts, logins, menu edits — is recorded in an immutable audit log with user, timestamp, and detail. Data is encrypted with 256-bit SSL and access is controlled by granular role-based permissions."},
+  {q:"Can I export my data?",a:"Yes. Sales reports, P&L statements, inventory logs, and audit trails can all be exported as CSV or PDF. You own your data — we just make it useful."}
+];
+const fl=document.getElementById('faqList');
+FAQS.forEach((f,i)=>{
+  const d=document.createElement('div');d.className='faq-item'+(i===0?' open':'');
+  d.innerHTML='<button class="faq-q"><span class="left"><span class="faq-num">'+String(i+1).padStart(2,'0')+'</span><span class="q">'+f.q+'</span></span><span class="faq-toggle">'+(i===0?ICONS.minus:ICONS.plus)+'</span></button><div class="faq-body"><div class="faq-body-inner"><p>'+f.a+'</p></div></div>';
+  fl.appendChild(d);
+});
+fl.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    fl.querySelectorAll('.faq-item').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-toggle').innerHTML=ICONS.plus;});
+    if(!isOpen){item.classList.add('open');item.querySelector('.faq-toggle').innerHTML=ICONS.minus;}
+  });
+});
+
+// ===== Ticker =====
+const STATUS=["SYSTEM STATUS: OPTIMIZED","LATENCY: 12ms","UPTIME: 99.9%","MODULES: 8/8 ACTIVE","ENCRYPTION: 256-BIT AES","AUDIT LOG: RECORDING","SYNC: ALL BRANCHES ONLINE"];
+const tk=document.getElementById('tickerTrack');
+let tks='';for(let r=0;r<3;r++){STATUS.forEach(s=>{tks+='<span class="ticker-item"><span class="d"></span><span class="t">'+s+'</span></span>';});}
+tk.innerHTML=tks;
+
+// ===== Terminal typing =====
+const COMMANDS=["INIT_POS","LOAD_KITCHEN_DISPLAY","SYNC_INVENTORY","ENABLE_AUDIT_LOG","START_SERVICE"];
+let cIdx=0,chIdx=0;const typedEl=document.getElementById('termTyped');
+function typeTerm(){
+  const cur=COMMANDS[cIdx];
+  if(chIdx<=cur.length){setTimeout(()=>{typedEl.textContent=cur.substring(0,chIdx);chIdx++;typeTerm();},120);}
+  else{setTimeout(()=>{cIdx=(cIdx+1)%COMMANDS.length;chIdx=0;typedEl.textContent='';typeTerm();},2000);}
+}
+typeTerm();
+
+// ===== Clock =====
+function updateClock(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleTimeString('en-US',{hour12:false});}
+updateClock();setInterval(updateClock,1000);
+
+// ===== Nav scroll + rail =====
+const topnav=document.getElementById('topnav');
+const railItems=document.querySelectorAll('.nav-rail-item');
+const railProgress=document.getElementById('railProgress');
+const SECS=['hero','features','modules','pricing','testimonials','faq'];
+function onScroll(){
+  const y=window.scrollY;
+  topnav.classList.toggle('scrolled',y>20);
+  const winH=document.documentElement.scrollHeight-window.innerHeight;
+  railProgress.style.height=(winH>0?y/winH:0)*256+'px';
+  let cur=SECS[0];
+  SECS.forEach(s=>{const el=document.getElementById(s);if(el&&el.getBoundingClientRect().top<=200)cur=s;});
+  railItems.forEach(it=>{
+    const active=it.dataset.sec===cur;
+    const dot=it.querySelector('.nav-rail-dot');const lbl=it.querySelector('.nav-rail-label');
+    dot.className='nav-rail-dot '+(active?'active':'inactive');
+    lbl.className='nav-rail-label '+(active?'active':'inactive');
+  });
+}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// ===== Mobile menu =====
+const navToggle=document.getElementById('navToggle');const mobileMenu=document.getElementById('mobileMenu');
+navToggle.addEventListener('click',()=>mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobileMenu.classList.remove('open')));
+</script>
 </body>
 </html>

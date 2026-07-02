@@ -278,6 +278,7 @@ section.block{padding:96px 0}
 .footer-bottom{border-top:1px solid var(--border);padding:24px 0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:16px}
 @media(min-width:640px){.footer-bottom{flex-direction:row}}
 .footer-bottom p{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
+
 /* ===== Corner Logo Badge ===== */
 .corner-badge {
   position: fixed;
@@ -302,7 +303,6 @@ section.block{padding:96px 0}
 </head>
 <body>
 
-<!-- Nav Rail -->
 <div class="nav-rail">
   <div class="nav-rail-track">
     <div class="nav-rail-progress" id="railProgress"></div>
@@ -327,7 +327,6 @@ section.block{padding:96px 0}
   </div>
 </div>
 
-<!-- Top Nav -->
 <nav class="topnav" id="topnav">
   <div class="container nav-inner">
     <a href="#hero" class="logo">
@@ -360,7 +359,6 @@ section.block{padding:96px 0}
   </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero" id="hero">
   <div class="container hero-grid">
     <div>
@@ -407,7 +405,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- Features -->
 <section class="block" id="features">
   <div class="container">
     <div class="section-head">
@@ -419,7 +416,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- Modules -->
 <section class="block modules" id="modules">
   <div class="container">
     <div class="section-head">
@@ -431,7 +427,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- Pricing -->
 <section class="block" id="pricing">
   <div class="container">
     <div class="section-head center">
@@ -453,7 +448,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- Testimonials -->
 <section class="block testimonials" id="testimonials">
   <div class="container">
     <div class="section-head">
@@ -465,7 +459,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="block" id="faq">
   <div class="container">
     <div class="section-head">
@@ -477,7 +470,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- Command Entry -->
 <section class="cmd-entry">
   <div class="container">
     <div class="cmd-box">
@@ -512,7 +504,6 @@ section.block{padding:96px 0}
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="ticker">
     <div class="ticker-track" id="tickerTrack"></div>
@@ -521,210 +512,13 @@ section.block{padding:96px 0}
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#hero" class="logo"><span class="pp">P&amp;P</span><span class="erp">ERP</span></a>
-        <p>The culinary operating system for modern hospitality. Run your entire business from one powerful, auditable platform.</p>
-        <div class="footer-clock"><span class="d"></span><span class="t">Closing Shift — <span id="clock"></span></span></div>
+        <p>The culinary operating system for modern hospitality.</p>
       </div>
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#modules">Modules</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#hero">About</a></li>
-          <li><a href="mailto:hello@pnp-erp.com">Contact</a></li>
-          <li><a href="#faq">Support</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#features">Security</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Access</h4>
-        <a href="https://kitchen-batch-buddy.lovable.app/login" class="btn-primary">Start Free Trial</a>
-        <p style="margin-top:12px;font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:9px;color:var(--muted)">24h trial · No card required</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 Powered by P&amp;P • All Rights Reserved</p>
-      <p>Built for hospitality operators worldwide</p>
     </div>
   </div>
 </footer>
 
-<script>
-const LOGIN_URL = "https://kitchen-batch-buddy.lovable.app/login";
+<img src="{633E23FC-8E30-41DA-B223-EAF3A6F2435E}.png" alt="P&P Logo" class="corner-badge">
 
-// ===== Icons (inline SVG) =====
-const ICONS = {
-  database:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>',
-  cog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 .3 1.4l1.6 1a1 1 0 0 0 1.4-.3 3.5 3.5 0 1 1 0 4.2 1 1 0 0 0-1.4-.3l-1.6 1a1 1 0 0 0-.3 1.4 3.5 3.5 0 1 1-4.2 0 1 1 0 0 0-.3-1.4l-1.6-1a1 1 0 0 0-1.4.3 3.5 3.5 0 1 1 0-4.2 1 1 0 0 0 1.4.3l1.6-1a1 1 0 0 0 .3-1.4 3.5 3.5 0 1 1 4.2 0z"/><circle cx="12" cy="12" r="3"/></svg>',
-  bar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>',
-  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-  boxes:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 21V12l-4.97-2.97a2 2 0 0 0-2.06 0z"/><path d="M7 17h.01"/><path d="M12 12l4.97 2.97a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0L12 7"/></svg>',
-  cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>',
-  monitor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
-  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-  crown:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>',
-  file:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
-  usercog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="15" r="3"/><circle cx="6" cy="7" r="3"/><path d="M6 21v-3a4 4 0 0 1 4-4h4"/><path d="M15.5 6.5l1-1.2a3 3 0 0 1 3.4 0l1 1.2"/></svg>',
-  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-  star:'<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
-  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
-  minus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>',
-  chevron:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'
-};
-
-// ===== Command List =====
-const COMMAND_LIST = ["POS — Point of Sale","Kitchen Display System","Owner Dashboard","Manager Controls","Analytics & KPIs","Inventory Tracking","Audit Logs","Sales Reports","Staff Management","Multi-Branch Sync"];
-const cl = document.getElementById('commandList');
-COMMAND_LIST.forEach((item,i)=>{
-  const li=document.createElement('li');
-  li.innerHTML='<button><span class="num">'+String(i+1).padStart(2,'0')+'</span><span class="txt">'+item+'</span><span class="fill"></span></button>';
-  cl.appendChild(li);
-});
-let litCount=0;
-setInterval(()=>{litCount=litCount>=COMMAND_LIST.length?0:litCount+1;
-  const items=cl.querySelectorAll('li');
-  items.forEach((li,i)=>{const f=li.querySelector('.fill');if(i<litCount){li.querySelector('.txt').classList.add('lit');f.style.maxWidth='100%';}else{li.querySelector('.txt').classList.remove('lit');f.style.maxWidth='0';}});
-},600);
-
-// ===== Features =====
-const FEATURES=[
-  {icon:ICONS.database,title:"Centralized Data",desc:"One source of truth across every location. Sales, inventory, staff and menus unified in a single ledger.",tag:"01 / Data"},
-  {icon:ICONS.cog,title:"Automation",desc:"Reduce manual work with smart workflows — auto-sync stock, schedule staff, generate end-of-shift reports.",tag:"02 / Ops"},
-  {icon:ICONS.bar,title:"Live Reporting",desc:"Instant dashboards with real-time KPIs. Watch revenue, covers, and kitchen performance as they happen.",tag:"03 / Insight"},
-  {icon:ICONS.shield,title:"Security",desc:"Enterprise-grade access controls, role-based permissions, and full audit trails on every action taken.",tag:"04 / Trust"},
-  {icon:ICONS.boxes,title:"Inventory",desc:"Track stock in real time with automatic low-stock alerts, waste logging, and supplier reorder triggers.",tag:"05 / Stock"}
-];
-const fg=document.getElementById('featuresGrid');
-FEATURES.forEach(f=>{
-  const d=document.createElement('div');d.className='feature-card';
-  d.innerHTML='<div class="top"><div class="feature-icon">'+f.icon+'</div><span class="feature-tag">'+f.tag+'</span></div><h3>'+f.title+'</h3><p>'+f.desc+'</p><div class="feature-underline"></div>';
-  fg.appendChild(d);
-});
-
-// ===== Modules =====
-const MODULES=[
-  {icon:ICONS.cart,name:"POS",desc:"Lightning-fast cloud-based point of sale with table management, split billing, and modifiers. Access from any device, anytime.",metrics:["0.3s avg ticket","Cloud-based","Split payments"]},
-  {icon:ICONS.monitor,name:"Kitchen Display",desc:"Digital order rail with route-to-station, prep timers, and allergy alerts. Tickets flow from POS to kitchen in real time.",metrics:["Route by station","Prep timers","Allergy flags"]},
-  {icon:ICONS.usercog,name:"Manager Panel",desc:"Shift scheduling, void approvals, discount controls, and live floor view. Everything a manager needs during service.",metrics:["Shift scheduling","Void approvals","Live floor view"]},
-  {icon:ICONS.crown,name:"Owner Admin",desc:"Remote oversight of all branches with financial controls, menu publishing, and role management from anywhere.",metrics:["Remote access","Menu publishing","Role management"]},
-  {icon:ICONS.file,name:"Audit Logs",desc:"Immutable record of every action — who, what, when. Full transparency for compliance and dispute resolution.",metrics:["Immutable","User-tracked","Exportable"]},
-  {icon:ICONS.bar,name:"Analytics",desc:"Sales, menu performance, and KPI analytics with real-time dashboards. Schedule automated daily insights to your inbox.",metrics:["Real-time dashboards","Auto-delivery","Custom periods"]},
-  {icon:ICONS.boxes,name:"Inventory",desc:"Real-time stock levels with recipe-linked deduction, low-stock alerts, and supplier reorder points.",metrics:["Recipe deduction","Low-stock alerts","Auto-reorder"]},
-  {icon:ICONS.users,name:"Staff Management",desc:"Role permissions, performance KPIs, and payroll export. Build the team that runs the service.",metrics:["Role permissions","Payroll export","Perf. KPIs"]}
-];
-const mg=document.getElementById('modulesGrid');
-MODULES.forEach((m,i)=>{
-  const b=document.createElement('button');b.className='module-card';b.dataset.idx=i;
-  b.innerHTML='<div class="top"><div class="module-icon">'+m.icon+'</div><span class="module-num">'+String(i+1).padStart(2,'0')+'</span></div><h3>'+m.name+'</h3><div class="module-expand-body"><div class="module-expand-inner"><p>'+m.desc+'</p><ul class="module-metrics">'+m.metrics.map(x=>'<li><span class="d"></span><span class="t">'+x+'</span></li>').join('')+'</ul></div></div><div class="module-hint">Expand '+ICONS.chevron+'</div>';
-  b.addEventListener('click',()=>{
-    const open=b.classList.contains('open');
-    document.querySelectorAll('.module-card').forEach(c=>c.classList.remove('open'));
-    if(!open)b.classList.add('open');
-  });
-  if(i===0)b.classList.add('open');
-  mg.appendChild(b);
-});
-
-// ===== Pricing =====
-const INCLUDED=["Complete ERP Access","Cloud-Based POS System","Kitchen Display System","2 POS Users (3rd: $9.99{One time Payment})","2 Kitchen Users (3rd: $9.99{One time Payment})","1 Manager User (2nd: $14.99{One time Payment})","1 Admin User (2nd: $14.99{One time Payment})","Analytics & KPIs","Inventory Tracking","Audit Logs","Multi-Branch Sync","Staff Management","24/7 Support","24-hour Free Trial"];
-const pl=document.getElementById('priceList');
-INCLUDED.forEach(item=>{const li=document.createElement('li');li.innerHTML=ICONS.check+'<span>'+item+'</span>';pl.appendChild(li);});
-
-// ===== Testimonials =====
-const TESTS=[
-  {quote:"Operations became significantly easier. Our managers now spend their time on the floor, not buried in spreadsheets at the end of every shift.",name:"Marcus H.",role:"Restaurant Owner",loc:"Bistro Voltaire · NYC"},
-  {quote:"Kitchen and POS integration saved hours daily. Orders flow seamlessly and ticket errors have dropped to nearly zero during peak service.",name:"Elena R.",role:"Manager",loc:"Trattoria Sole · Boston"},
-  {quote:"Real-time reporting across all stores changed how we operate. I can compare branch performance from my phone before my morning coffee.",name:"James K.",role:"Multi-Branch Chain",loc:"Pacific Group · 12 locations"}
-];
-const tg=document.getElementById('testGrid');
-TESTS.forEach(t=>{
-  const f=document.createElement('figure');f.className='test-card';
-  f.innerHTML='<div><div class="test-stars">'+ICONS.star+ICONS.star+ICONS.star+ICONS.star+ICONS.star+'</div><blockquote class="test-quote">'+t.quote+'</blockquote></div><figcaption class="test-fig"><div class="test-name">'+t.name+'</div><div class="test-role"><span class="r">'+t.role+'</span><span class="l">· '+t.loc+'</span></div></figcaption>';
-  tg.appendChild(f);
-});
-
-// ===== FAQ =====
-const FAQS=[
-  {q:"Is there a free trial?",a:"Yes — every plan includes a 24-hour free trial with full access to all modules. No credit card required to start. You can explore POS, Kitchen Display, Inventory, and every dashboard before committing."},
-  {q:"Does it support restaurants?",a:"Absolutely. P&P ERP was built specifically for restaurant workflows — from table-side POS and kitchen display routing to recipe-linked inventory deduction and shift-based staff scheduling. Every module speaks the language of hospitality."},
-  {q:"Can owners monitor remotely?",a:"Yes. The Owner Admin dashboard gives you complete remote oversight of all branches. Compare performance, push menu updates, manage roles, and view financial reports from any device, anywhere in the world."},
-  {q:"How does multi-branch syncing work?",a:"All locations share a single centralized database. Menu changes, pricing updates, and role configurations push to every branch instantly. Sales and inventory data flows back to a unified dashboard for comparison and reporting."},
-  {q:"What about security and audit trails?",a:"Every action — voids, discounts, logins, menu edits — is recorded in an immutable audit log with user, timestamp, and detail. Data is encrypted with 256-bit SSL and access is controlled by granular role-based permissions."},
-  {q:"Can I export my data?",a:"Yes. Sales reports, P&L statements, inventory logs, and audit trails can all be exported as CSV or PDF. You own your data — we just make it useful."}
-];
-const fl=document.getElementById('faqList');
-FAQS.forEach((f,i)=>{
-  const d=document.createElement('div');d.className='faq-item'+(i===0?' open':'');
-  d.innerHTML='<button class="faq-q"><span class="left"><span class="faq-num">'+String(i+1).padStart(2,'0')+'</span><span class="q">'+f.q+'</span></span><span class="faq-toggle">'+(i===0?ICONS.minus:ICONS.plus)+'</span></button><div class="faq-body"><div class="faq-body-inner"><p>'+f.a+'</p></div></div>';
-  fl.appendChild(d);
-});
-fl.querySelectorAll('.faq-item').forEach(item=>{
-  item.querySelector('.faq-q').addEventListener('click',()=>{
-    const isOpen=item.classList.contains('open');
-    fl.querySelectorAll('.faq-item').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-toggle').innerHTML=ICONS.plus;});
-    if(!isOpen){item.classList.add('open');item.querySelector('.faq-toggle').innerHTML=ICONS.minus;}
-  });
-});
-
-// ===== Ticker =====
-const STATUS=["SYSTEM STATUS: OPTIMIZED","LATENCY: 12ms","UPTIME: 99.9%","MODULES: 8/8 ACTIVE","ENCRYPTION: 256-BIT AES","AUDIT LOG: RECORDING","SYNC: ALL BRANCHES ONLINE"];
-const tk=document.getElementById('tickerTrack');
-let tks='';for(let r=0;r<3;r++){STATUS.forEach(s=>{tks+='<span class="ticker-item"><span class="d"></span><span class="t">'+s+'</span></span>';});}
-tk.innerHTML=tks;
-
-// ===== Terminal typing =====
-const COMMANDS=["INIT_POS","LOAD_KITCHEN_DISPLAY","SYNC_INVENTORY","ENABLE_AUDIT_LOG","START_SERVICE"];
-let cIdx=0,chIdx=0;const typedEl=document.getElementById('termTyped');
-function typeTerm(){
-  const cur=COMMANDS[cIdx];
-  if(chIdx<=cur.length){setTimeout(()=>{typedEl.textContent=cur.substring(0,chIdx);chIdx++;typeTerm();},120);}
-  else{setTimeout(()=>{cIdx=(cIdx+1)%COMMANDS.length;chIdx=0;typedEl.textContent='';typeTerm();},2000);}
-}
-typeTerm();
-
-// ===== Clock =====
-function updateClock(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleTimeString('en-US',{hour12:false});}
-updateClock();setInterval(updateClock,1000);
-
-// ===== Nav scroll + rail =====
-const topnav=document.getElementById('topnav');
-const railItems=document.querySelectorAll('.nav-rail-item');
-const railProgress=document.getElementById('railProgress');
-const SECS=['hero','features','modules','pricing','testimonials','faq'];
-function onScroll(){
-  const y=window.scrollY;
-  topnav.classList.toggle('scrolled',y>20);
-  const winH=document.documentElement.scrollHeight-window.innerHeight;
-  railProgress.style.height=(winH>0?y/winH:0)*256+'px';
-  let cur=SECS[0];
-  SECS.forEach(s=>{const el=document.getElementById(s);if(el&&el.getBoundingClientRect().top<=200)cur=s;});
-  railItems.forEach(it=>{
-    const active=it.dataset.sec===cur;
-    const dot=it.querySelector('.nav-rail-dot');const lbl=it.querySelector('.nav-rail-label');
-    dot.className='nav-rail-dot '+(active?'active':'inactive');
-    lbl.className='nav-rail-label '+(active?'active':'inactive');
-  });
-}
-window.addEventListener('scroll',onScroll,{passive:true});onScroll();
-
-// ===== Mobile menu =====
-const navToggle=document.getElementById('navToggle');const mobileMenu=document.getElementById('mobileMenu');
-navToggle.addEventListener('click',()=>mobileMenu.classList.toggle('open'));
-mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobileMenu.classList.remove('open')));
-</script>
-<img src="{633E23FC-8E30-41DA-B223-EAF3A6F2435E}.png" alt="Pen & Paper ERP Logo" class="corner-badge">
 </body>
 </html>

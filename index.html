@@ -156,8 +156,7 @@ section.block{padding:96px 0}
 @media(min-width:1024px){.modules-grid{grid-template-columns:repeat(4,1fr)}}
 .module-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;overflow:hidden;border-radius:16px;border:1px solid var(--border);background:var(--bg);padding:24px;text-align:left;transition:all .3s}
 .module-card:hover{border-color:rgba(37,99,235,.4)}
-.module-card.open{border-color:var(--primary);box-shadow:0 25px 50px rgba(37,99,235,.1)}
-@media(min-width:768px){.module-card.open{grid-row:span 2}}
+.module-card.open{border-color:var(--primary);box-shadow:0 25px 50px rgba(37,99,235,.1);grid-row:span 2}
 .module-card .top{display:flex;width:100%;align-items:center;justify-content:space-between;margin-bottom:16px}
 .module-icon{display:flex;align-items:center;justify-content:center;height:44px;width:44px;border-radius:12px;border:1px solid var(--border);background:rgba(239,246,255,.5);color:var(--primary);transition:all .3s}
 .module-card.open .module-icon{background:var(--primary);color:#fff;border-color:var(--primary)}
@@ -177,25 +176,29 @@ section.block{padding:96px 0}
 .module-hint svg{width:12px;height:12px}
 .module-card.open .module-hint{display:none}
 
-/* ===== Pricing ===== */
+/* ===== Pricing Upgrade Layout Customization ===== */
 .price-wrap{max-width:42rem;margin:0 auto}
-.price-card{overflow:hidden;border-radius:24px;border:1px solid var(--border);background:rgba(239,246,255,.3);box-shadow:0 40px 80px rgba(37,99,235,.05)}
+.price-card{overflow:hidden;border-radius:24px;border:1px solid var(--border);background:var(--bg);box-shadow:0 40px 80px rgba(37,99,235,.05)}
 .price-card-inner{padding:40px}
 @media(min-width:1024px){.price-card-inner{padding:48px}}
 .price-badge{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;background:rgba(37,99,235,.1);padding:6px 16px;margin-bottom:32px}
-.price-badge .d{height:6px;width:6px;border-radius:9999px;background:var(--primary)}
-.price-badge .t{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--primary)}
-.price-amt{display:flex;align-items:baseline;gap:8px}
-.price-amt .dollar{font-family:var(--font-heading);font-size:72px;font-weight:700;color:var(--primary)}
+.price-badge .icon{height:6px;width:6px;border-radius:9999px;background:var(--primary)}
+.price-badge .title{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--primary)}
+.price-amt{display:flex;align-items:baseline;gap:4px;margin-bottom:16px}
+.price-amt .dollar{font-family:var(--font-heading);font-size:72px;font-weight:700;color:var(--fg);line-height:1}
 @media(min-width:1024px){.price-amt .dollar{font-size:80px}}
 .price-amt .cents{font-family:var(--font-heading);font-size:30px;font-weight:600;color:var(--muted)}
-.price-per{margin-top:8px;font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted)}
-.price-list{margin-top:40px;list-style:none;display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:640px){.price-list{grid-template-columns:repeat(2,1fr);column-gap:24px}}
-.price-list li{display:flex;align-items:flex-start;gap:8px}
-.price-list li svg{width:14px;height:14px;margin-top:4px;flex-shrink:0;color:var(--primary)}
+.price-per{margin-bottom:32px}
+.price-per p{font-family:var(--font-mono);letter-spacing:.15em;text-transform:uppercase;font-size:10px;color:var(--muted);margin-bottom:12px}
+.price-profiles{list-style:none;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.price-profiles li{font-family:var(--font-mono);font-size:11px;background:var(--secondary);color:var(--primary);padding:4px 10px;border-radius:6px}
+.extra-info{font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:12px}
+.price-list{list-style:none;display:grid;grid-template-columns:1fr;gap:16px;border-top:1px solid var(--border);padding-top:32px}
+@media(min-width:640px){.price-list{grid-template-columns:repeat(2,1fr)}}
+.price-list li{display:flex;align-items:flex-start;gap:10px}
+.price-list li svg{width:16px;height:16px;color:var(--primary);flex-shrink:0;margin-top:2px}
 .price-list li span{font-size:14px;color:var(--fg)}
-.price-cta{margin-top:40px;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--primary);color:#fff;padding:16px 32px;font-size:14px;font-weight:600;transition:all .2s}
+.price-cta{margin-top:40px;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:var(--primary);color:#fff;padding:16px 32px;font-size:14px;font-weight:600;transition:all .2s;width:100%}
 .price-cta:hover{background:var(--primary-dark);box-shadow:0 20px 40px rgba(37,99,235,.3)}
 
 /* ===== Testimonials ===== */
@@ -224,7 +227,8 @@ section.block{padding:96px 0}
 .faq-q .q{font-family:var(--font-heading);font-size:20px;font-weight:600}
 .faq-toggle{display:flex;align-items:center;justify-content:center;height:32px;width:32px;flex-shrink:0;border-radius:9999px;border:1px solid var(--border);transition:all .3s;color:var(--muted)}
 .faq-item.open .faq-toggle{border-color:var(--primary);background:var(--primary);color:#fff}
-.faq-toggle svg{width:14px;height:14px}
+.faq-toggle svg{width:14px;height:14px;transition:transform .3s}
+.faq-item.open .faq-toggle svg{transform:rotate(45deg)}
 .faq-body{display:grid;grid-template-rows:0fr;opacity:0;transition:all .3s}
 .faq-item.open .faq-body{grid-template-rows:1fr;opacity:1;padding-bottom:24px}
 .faq-body-inner{overflow:hidden}
@@ -294,7 +298,6 @@ section.block{padding:96px 0}
   padding: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  mix-blend-mode: multiply;
 }
 .corner-badge:hover {
   transform: translateY(-6px);
@@ -438,36 +441,33 @@ section.block{padding:96px 0}
     <div class="price-wrap">
       <div class="price-card">
         <div class="price-card-inner">
-<section class="pricing">
-  <div class="pricing-card">
-    <div class="price-badge">
-      <span class="icon"></span>
-      <span class="title">Premium Plan</span>
+          <div class="price-badge">
+            <span class="icon"></span>
+            <span class="title">Premium Plan</span>
+          </div>
+          <div class="price-amt">
+            <span class="dollar">$59</span>
+            <span class="cents">.99</span>
+          </div>
+          <div class="price-per">
+            <p>One-time payment includes:</p>
+            <ul class="price-profiles">
+              <li>1 Manager profile</li>
+              <li>1 Admin profile</li>
+              <li>2 Kitchen profiles</li>
+              <li>2 POS profiles</li>
+            </ul>
+            <p class="extra-info">
+              Additional profiles: Kitchen/POS $9.99 each, Manager/Admin $14.99 each
+            </p>
+          </div>
+          <ul class="price-list" id="priceList"></ul>
+          <a href="https://kitchen-batch-buddy.lovable.app/login" class="price-cta">
+            Get Started Natively
+          </a>
+        </div>
+      </div>
     </div>
-
-    <div class="price-amt">
-      <span class="dollar">$59</span>
-      <span class="cents">.99</span>
-    </div>
-
-    <div class="price-per">
-      <p>One-time payment includes:</p>
-      <ul class="features">
-        <li>1 Manager profile</li>
-        <li>1 Admin profile</li>
-        <li>2 Kitchen profiles</li>
-        <li>2 POS profiles</li>
-      </ul>
-      <p class="extra-info">
-        Additional profiles: Kitchen/POS $9.99 each, Manager/Admin $14.99 each
-      </p>
-    </div>
-
-    <ul class="price-list" id="priceList"></ul>
-
-    <a href="https://kitchen-batch-buddy.lovable.app/login" class="price-cta">
-      Get Started
-    </a>
   </div>
 </section>
 
@@ -515,33 +515,301 @@ section.block{padding:96px 0}
             <span class="d" style="background:#facc15"></span>
             <span class="d" style="background:#4ade80"></span>
           </div>
-          <div class="term-line"><span style="color:rgba(255,255,255,.5)">$&nbsp;</span>The system is cloud based for context the video below is just a way of decoration_</div>
-          <div class="term-line" style="color:rgba(255,255,255,.5)">↳ Booting P&P ERP v2.6.1...</div>
-          <div class="term-line" style="color:#86efac">↳ &gt; Modules loaded: 8/8 ✓</div>
-          <div class="term-line" style="color:#86efac">↳ &gt; Database synced ✓</div>
-          <div class="term-line" style="color:rgba(255,255,255,.5)">↳ Running command:</div>
-          <div class="term-line"><span style="color:rgba(255,255,255,.5)">$&nbsp;</span><span id="termTyped"></span><span class="term-cursor"></span></div>
+          <div class="term-line"><span style="color:rgba(255,255,255,.5)">$&nbsp;</span><span id="typedLine"></span><span class="term-cursor"></span></div>
+          <div class="term-line" style="color:rgba(255,255,255,.5); margin-top: 12px;">↳ Booting P&P ERP v2.6.1... Matrix Online.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="ticker">
-    <div class="ticker-track" id="tickerTrack"></div>
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="d"></span><span class="t">POS Terminal Online</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">KDS Latency 12ms</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">Inventory Cloud Sync Active</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">Secure Gateways Operational</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">POS Terminal Online</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">KDS Latency 12ms</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">Inventory Cloud Sync Active</span></div>
+    <div class="ticker-item"><span class="d"></span><span class="t">Secure Gateways Operational</span></div>
   </div>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#hero" class="logo"><span class="pp">P&amp;P</span><span class="erp">ERP</span></a>
-        <p>The culinary operating system for modern hospitality.</p>
+</div>
+
+<footer style="background: #fafafa; border-top:1px solid var(--border)">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="#hero" class="logo">
+        <span class="pp">P&amp;P</span>
+        <span class="erp">ERP</span>
+      </a>
+      <p>The core digital architecture for high-volume enterprise hospitality operations worldwide.</p>
+      <div class="footer-clock">
+        <span class="d"></span>
+        <span class="t" id="liveClock">UTC 00:00:00</span>
       </div>
     </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#modules">Modules</a></li>
+        <li><a href="#pricing">Pricing Structure</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Security</h4>
+      <ul>
+        <li><a href="#">Audit Logs</a></li>
+        <li><a href="#">Encryption Standards</a></li>
+        <li><a href="#">Uptime SLA</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Corporate</h4>
+      <ul>
+        <li><a href="https://kitchen-batch-buddy.lovable.app/login">Sign In</a></li>
+        <li><a href="https://kitchen-batch-buddy.lovable.app/login">Request Demo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 P&amp;P ERP Systems. All Rights Reserved.</p>
+    <p>v2.6.1 // Cloud Core</p>
   </div>
 </footer>
 
-<img src="{633E23FC-8E30-41DA-B223-EAF3A6F2435E}.png" alt="Pen & Paper ERP Logo" class="corner-badge">
+<script>
+// Mock Data Hydration Maps
+const dataLists = {
+  commands: [
+    "Core.Initialize()",
+    "POS.Bridge.Connect()",
+    "KDS.Queue.Sync()",
+    "Inventory.Ledger.Audit()"
+  ],
+  features: [
+    { title: "Real-Time Terminal Sync", tag: "POS Core", desc: "Instantly broadcast ticket modifications from table-side tablets straight to hot-line execution screens without polling pauses." },
+    { title: "Smart Matrix Ledger", tag: "Inventory", desc: "Automate dynamic ingredient unit depletion parsing upon order finalization updates across decentralized warehouse storerooms." },
+    { title: "Immutable Trail Analytics", tag: "Security", desc: "Comprehensive cryptographically locked action tracking captures void configurations and modification footprints securely." },
+    { title: "Multi-Unit Centralized Hub", tag: "Management", desc: "Oversee operational yields, standard recipes, cross-location configurations and systemic controls via an unified dashboard interface." },
+    { title: "Predictive Order Matrix", tag: "Analytics", desc: "Harness structural usage distributions to dynamically estimate waste metrics and optimize ingredient replenishment workflows." },
+    { title: "Unified API Pipeline", tag: "Integrations", desc: "Expose secure webhooks and JSON transport patterns to instantly orchestrate custom software integrations with external infrastructure." }
+  ],
+  modules: [
+    { num: "MOD-01", title: "Point of Sale", desc: "Lightning fast transactional processing engine constructed explicitly to eliminate order-taking latency barriers under peak dining traffic surges.", metrics: ["Zero-lag modifiers", "Offline survival cache"] },
+    { num: "MOD-02", title: "Kitchen Display (KDS)", desc: "Intelligent structural pipeline mapping that splits tickets intelligently across target prep line configurations automatically.", metrics: ["Course pacing arrays", "Station priority sorting"] },
+    { num: "MOD-03", title: "Smart Inventory", desc: "Granular inventory management loops running programmatic waste tracking checks along with recipe cost breakdowns dynamically.", metrics: ["Ingredient sub-parsing", "Auto-PO compilation"] },
+    { num: "MOD-04", title: "Live Analytics Engine", desc: "Transform structural transaction lines into elegant metric reports focusing directly on margin performance metrics on-the-fly.", metrics: ["Labor vs Sales projections", "Hourly velocity trends"] },
+    { num: "MOD-05", title: "Audit & Compliancy", desc: "Unmatched operational visibility. Flag system configuration shifts, voids, price bypass behaviors with real-time exception notifications.", metrics: ["Cryptographic tracking logs", "Granular roll rules"] },
+    { num: "MOD-06", title: "Manager Control Room", desc: "Comprehensive floor management maps allowing swift schedule updating, payroll auditing and dynamic localized product catalog overrides.", metrics: ["Floor configuration updates", "Shift split arrays"] },
+    { num: "MOD-07", title: "Owner Control Node", desc: "High-level access architecture engineered specifically to seamlessly manage critical cross-regional P&L visibility data points securely.", metrics: ["Multi-outlet rollups", "Margin threat alerts"] },
+    { num: "MOD-08", title: "Real-Time Reporter", desc: "Beautiful streaming transactional feeds keeping your corporate branch directors constantly aligned with changing store conditions.", metrics: ["Live push sockets", "Custom metric reports"] }
+  ],
+  pricingHighlights: [
+    "Unlimited monthly pipeline volume", "Comprehensive multi-point secure encryption protocols", "Interactive real-time corporate oversight matrices", "Continuous structural cloud database preservation runs", "Direct programmatic access routes", "Always-on responsive live support arrays"
+  ],
+  testimonials: [
+    { stars: 5, quote: "Migrating our core architecture over to this platform dropped menu deployment cycles down to minutes across all twelve locations instantly.", name: "Marcus Vance", role: "Director of Ops", corp: "Vance Bistro Group" },
+    { stars: 5, quote: "The KDS routing matrix is flawless. Prep lines run smoothly, ticket loss metrics hit zero, and kitchen layout friction vanished entirely.", name: "Elena Rostova", role: "Executive Chef / Owner", corp: "The Foundry Pass" },
+    { stars: 5, quote: "Unparalleled clarity. Having immutable access logs mapped directly against processing exceptions gave us full command over our floor assets.", name: "Devon Blake", role: "Loss Prevention VP", corp: "Mesa Hospitality Collective" }
+  ],
+  faqs: [
+    { q: "How long does live hardware deployment take?", a: "Because our framework uses scalable cloud native protocols, onboarding takes hours rather than weeks. Standard terminals sync profile data securely down instantly upon terminal validation loops." },
+    { q: "Can the platform operate through unexpected ISP drops?", a: "Yes. Our robust edge isolation architecture preserves processing integrity locally during active network disruptions, syncing operations securely once connectivity returns." },
+    { q: "What security measures govern financial pipelines?", a: "Every pipeline interaction utilizes end-to-end 256-bit secure formatting protocols and tokenization processes to guarantee absolute client safety across transactions." }
+  ]
+};
 
+// UI Component Renderer Engine
+document.addEventListener("DOMContentLoaded", () => {
+  // Populate Load Commands
+  document.getElementById("commandList").innerHTML = dataLists.commands.map((cmd, i) => `
+    <li>
+      <button>
+        <span class="num">0${i+1}</span>
+        <span class="txt">${cmd}</span>
+        <span class="fill"></span>
+      </button>
+    </li>
+  `).join('');
+
+  // Populate System Features
+  document.getElementById("featuresGrid").innerHTML = dataLists.features.map(f => `
+    <div class="feature-card">
+      <div class="top">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </div>
+        <span class="feature-tag">${f.tag}</span>
+      </div>
+      <h3>${f.title}</h3>
+      <p>${f.desc}</p>
+      <div class="feature-underline"></div>
+    </div>
+  `).join('');
+
+  // Populate Modules Lattice Matrix
+  document.getElementById("modulesGrid").innerHTML = dataLists.modules.map((m, idx) => `
+    <div class="module-card" id="mod-${idx}">
+      <div class="top">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <span class="module-num">${m.num}</span>
+      </div>
+      <h3>${m.title}</h3>
+      <div class="module-expand-body">
+        <div class="module-expand-inner">
+          <p>${m.desc}</p>
+          <ul class="module-metrics">
+            ${m.metrics.map(met => `<li><span class="d"></span><span class="t">${met}</span></li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <div class="module-hint">
+        <span>View Layout</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+    </div>
+  `).join('');
+
+  // Add click toggle functionality to modules
+  document.querySelectorAll('.module-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.module-card').forEach(c => c.classList.remove('open'));
+      if(!isOpen) card.classList.add('open');
+    });
+  });
+
+  // Populate Pricing Checklist Elements
+  document.getElementById("priceList").innerHTML = dataLists.pricingHighlights.map(item => `
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>${item}</span>
+    </li>
+  `).join('');
+
+  // Populate Professional Proof Testimonials
+  document.getElementById("testGrid").innerHTML = dataLists.testimonials.map(t => `
+    <div class="test-card">
+      <div>
+        <div class="test-stars">
+          ${Array(t.stars).fill().map(() => `<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`).join('')}
+        </div>
+        <p class="test-quote">"${t.quote}"</p>
+      </div>
+      <div class="test-fig">
+        <div class="test-name">${t.name}</div>
+        <div class="test-role"><span class="r">${t.role}</span><span class="l">// ${t.corp}</span></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Populate FAQ Container Accordion elements
+  document.getElementById("faqList").innerHTML = dataLists.faqs.map((f, i) => `
+    <div class="faq-item">
+      <button class="faq-q" type="button">
+        <div class="left">
+          <span class="faq-num">Q/0${i+1}</span>
+          <span class="q">${f.q}</span>
+        </div>
+        <div class="faq-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+      </button>
+      <div class="faq-body">
+        <div class="faq-body-inner">
+          <p>${f.a}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // FAQ Accordion click toggler logic
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Responsive Mobile Menu Display Logic
+  const navToggle = document.getElementById("navToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+  navToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("open");
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Scroll Engine Spy & Side Progress Rail Automation
+  const sections = document.querySelectorAll("section[id]");
+  const topNav = document.getElementById("topnav");
+  const railProgress = document.getElementById("railProgress");
+  const railItems = document.querySelectorAll(".nav-rail-item");
+
+  window.addEventListener("scroll", () => {
+    let currentScroll = window.pageYOffset;
+    
+    // Top nav styling adjustment upon viewport drop
+    if (currentScroll > 50) {
+      topNav.classList.add("scrolled");
+    } else {
+      topNav.classList.remove("scrolled");
+    }
+
+    // Scroll Spy evaluations to update elements dynamically
+    sections.forEach((sec, idx) => {
+      const top = sec.offsetTop - 120;
+      const height = sec.offsetHeight;
+      const id = sec.getAttribute("id");
+
+      if (currentScroll >= top && currentScroll < top + height) {
+        // Track visual fill calculation
+        let progressPercent = (idx / (sections.length - 1)) * 100;
+        railProgress.style.height = `${progressPercent}%`;
+
+        // Switch side link visibility state loops
+        railItems.forEach(item => {
+          const dot = item.querySelector(".nav-rail-dot");
+          const label = item.querySelector(".nav-rail-label");
+          
+          if(item.getAttribute("data-sec") === id) {
+            dot.className = "nav-rail-dot active";
+            label.className = "nav-rail-label active";
+          } else {
+            dot.className = "nav-rail-dot inactive";
+            label.className = "nav-rail-label inactive";
+          }
+        });
+      }
+    });
+  });
+
+  // Simulated System Typewriter UI Console Sequence
+  const textToType = "The system is entirely cloud-based. Local processing terminal nodes established globally...";
+  let typeIdx = 0;
+  function simulateTypewriter() {
+    if (typeIdx < textToType.length) {
+      document.getElementById("typedLine").innerHTML += textToType.charAt(typeIdx);
+      typeIdx++;
+      setTimeout(simulateTypewriter, 45);
+    }
+  }
+  setTimeout(simulateTypewriter, 1000);
+
+  // Alive System System Time Controller Display
+  function updateSystemClock() {
+    const d = new Date();
+    document.getElementById("liveClock").innerText = "UTC " + d.toISOString().replace('T', ' ').substring(0, 19);
+  }
+  setInterval(updateSystemClock, 1000);
+  updateSystemClock();
+});
+</script>
 </body>
 </html>

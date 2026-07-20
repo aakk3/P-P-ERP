@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pen &amp; Paper ERP — Run your front line and back office from one system</title>
+<meta name="description" content="Pen & Paper ERP connects your cashier, kitchen, inventory, and management teams in a single platform." />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --navy:#0b2a4a;--blue-deep:#0f4c81;--blue:#1f6fb2;--blue-bright:#2f8fe0;
+    --blue-pale:#eaf3fc;--blue-paler:#f4f8fc;--ink:#16232f;--slate:#5b6b7a;
+    --slate-light:#8ba0b5;--line:#d8e6f4;--white:#fff;--green:#16a34a;
+    --shadow:0 8px 24px rgba(15,76,129,0.10);
+    --shadow-lg:0 20px 50px rgba(15,76,129,0.14);
+  }
+  body{font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--white);line-height:1.5;}
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .container{max-width:1140px;margin:0 auto;padding:0 24px;}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--blue-bright),var(--navy));display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0;}
+  .brand-icon svg{width:18px;height:18px;}
+  .brand-text{display:flex;flex-direction:column;line-height:1;}
+  .brand-name{font-weight:800;font-size:1.05rem;color:var(--navy);letter-spacing:-0.02em;}
+  .brand-tag{font-weight:600;font-size:0.62rem;color:var(--blue);letter-spacing:0.12em;text-transform:uppercase;margin-top:2px;}
+  nav{display:flex;gap:32px;align-items:center;}
+  nav a{font-size:0.95rem;color:var(--slate);font-weight:500;transition:color 0.15s;}
+  nav a:hover{color:var(--blue-deep);}
+  .btn-login{padding:10px 24px;border-radius:8px;font-weight:600;font-size:0.95rem;background:var(--blue-deep);color:white;transition:all 0.15s;display:inline-block;}
+  .btn-login:hover{background:var(--navy);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,76,129,0.3);}
+
+  /* HERO */
+  .hero{background:radial-gradient(1100px 480px at 85% -10%,rgba(47,143,224,0.15),transparent 60%),linear-gradient(180deg,var(--blue-pale) 0%,#fff 65%);padding:88px 24px 72px;border-bottom:1px solid var(--line);}
+  .hero-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--blue-deep);background:white;border:1px solid var(--line);padding:6px 14px;border-radius:100px;margin-bottom:20px;box-shadow:0 1px 2px rgba(0,0,0,0.04);}
+  .hero h1{font-size:2.7rem;line-height:1.12;color:var(--navy);margin-bottom:20px;letter-spacing:-0.02em;font-weight:800;}
+  .hero h1 span{color:var(--blue);}
+  .hero p{font-size:1.1rem;color:var(--slate);max-width:520px;margin-bottom:32px;}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{padding:14px 28px;border-radius:8px;font-weight:600;font-size:1rem;background:var(--blue-deep);color:white;transition:all 0.15s;display:inline-block;}
+  .btn-primary:hover{background:var(--navy);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,76,129,0.3);}
+  .btn-outline{padding:14px 28px;border-radius:8px;font-weight:600;font-size:1rem;border:1px solid var(--blue-deep);color:var(--blue-deep);transition:all 0.15s;display:inline-block;background:none;}
+  .btn-outline:hover{background:var(--blue-pale);}
+  .hero-card{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);padding:24px;}
+  .hero-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+  .hero-card-title{font-weight:700;color:var(--navy);font-size:0.95rem;}
+  .hero-card-dots{display:flex;gap:6px;}
+  .hero-card-dots div{width:9px;height:9px;border-radius:50%;background:var(--line);}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .hero-stat{background:var(--blue-pale);border-radius:10px;padding:16px;}
+  .hero-stat-num{font-size:1.5rem;font-weight:800;color:var(--blue-deep);}
+  .hero-stat-lbl{font-size:0.8rem;color:var(--slate);margin-top:2px;}
+  .hero-bar{height:8px;background:var(--blue-pale);border-radius:6px;margin-top:16px;overflow:hidden;}
+  .hero-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-bright));border-radius:6px;width:72%;}
+
+  /* SECTION */
+  section{padding:80px 24px;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 48px;}
+  .section-badge{display:inline-flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--blue-deep);background:white;border:1px solid var(--line);padding:6px 14px;border-radius:100px;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,0.04);}
+  .section-head h2{font-size:2rem;color:var(--navy);margin-bottom:12px;letter-spacing:-0.02em;font-weight:800;}
+  .section-head p{font-size:1.05rem;color:var(--slate);}
+
+  /* FEATURES */
+  .features{background:var(--white);}
+  .feature-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .feature-card{border:1px solid var(--line);border-radius:12px;padding:26px;background:white;transition:all 0.2s;}
+  .feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--blue-bright);}
+  .feature-icon{width:44px;height:44px;border-radius:10px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--blue-deep);}
+  .feature-icon svg{width:22px;height:22px;}
+  .feature-card h3{font-size:1.05rem;color:var(--navy);margin-bottom:8px;font-weight:700;}
+  .feature-card p{font-size:0.9rem;color:var(--slate);}
+
+  /* PRICING */
+  .pricing{background:var(--blue-pale);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .price-grid{max-width:920px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .price-card{background:white;border-radius:16px;padding:36px;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;}
+  .price-card.highlight{border:2px solid var(--blue-deep);}
+  .price-card:not(.highlight){border:1px solid var(--line);}
+  .price-tag{position:absolute;top:-13px;left:32px;background:var(--blue-deep);color:white;font-size:0.72rem;font-weight:700;padding:5px 12px;border-radius:100px;text-transform:uppercase;letter-spacing:0.03em;}
+  .price-card h3{font-size:1.2rem;color:var(--navy);margin-bottom:6px;font-weight:800;}
+  .price-card .sub{font-size:0.92rem;color:var(--slate);margin-bottom:24px;}
+  .price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:6px;}
+  .price-amount .amt{font-size:2.5rem;font-weight:800;color:var(--blue-deep);}
+  .price-amount .period{font-size:0.95rem;color:var(--slate);}
+  .price-note{font-size:0.88rem;color:var(--slate);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--line);}
+  .price-note strong{color:var(--navy);}
+  .price-list{list-style:none;margin-bottom:28px;flex-grow:1;}
+  .price-list li{display:flex;align-items:flex-start;gap:10px;font-size:0.92rem;color:var(--ink);margin-bottom:12px;}
+  .price-list svg{flex-shrink:0;width:18px;height:18px;color:var(--blue-deep);margin-top:1px;}
+  .price-btn{display:block;width:100%;text-align:center;padding:10px 24px;border-radius:8px;font-weight:600;font-size:0.95rem;transition:all 0.15s;}
+  .price-btn.primary{background:var(--blue-deep);color:white;}
+  .price-btn.primary:hover{background:var(--navy);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,76,129,0.3);}
+  .price-btn.outline{border:1px solid var(--blue-deep);color:var(--blue-deep);}
+  .price-btn.outline:hover{background:var(--blue-pale);}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:white;padding:56px 24px 32px;}
+  .footer-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;}
+  .footer-brand .brand-icon{margin-bottom:16px;}
+  .footer-brand p{color:var(--slate-light);font-size:0.92rem;max-width:320px;}
+  .footer-col h4{font-weight:700;font-size:0.95rem;margin-bottom:16px;}
+  .footer-col a{display:block;color:var(--slate-light);font-size:0.9rem;margin-bottom:10px;transition:color 0.15s;}
+  .footer-col a:hover{color:white;}
+  .footer-bottom{max-width:1140px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);text-align:center;color:var(--slate-light);font-size:0.85rem;}
+
+  /* CHAT WIDGET */
+  .chat-toggle{position:fixed;bottom:24px;right:24px;z-index:50;width:56px;height:56px;border-radius:50%;background:var(--blue-deep);color:white;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(15,76,129,0.4);transition:all 0.2s;}
+  .chat-toggle:hover{background:var(--navy);transform:scale(1.05);}
+  .chat-toggle svg{width:26px;height:26px;}
+  .chat-panel{position:fixed;bottom:96px;right:24px;z-index:50;width:340px;max-width:calc(100vw - 48px);background:white;border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid var(--line);display:none;flex-direction:column;overflow:hidden;}
+  .chat-panel.open{display:flex;}
+  .chat-head{background:var(--blue-deep);color:white;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+  .chat-head h3{font-weight:700;font-size:1rem;}
+  .chat-head button{color:white;padding:4px;}
+  .chat-head svg{width:20px;height:20px;}
+  .chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:320px;overflow-y:auto;}
+  .chat-msg{background:var(--blue-pale);border-radius:10px;padding:10px 14px;font-size:0.88rem;color:var(--ink);}
+  .chat-success{background:#dcfce7;border-radius:10px;padding:12px 14px;font-size:0.88rem;color:#15803d;}
+  .chat-form{display:flex;flex-direction:column;gap:8px;padding:16px;border-top:1px solid var(--line);}
+  .chat-form input,.chat-form textarea{padding:8px 12px;border-radius:8px;border:1px solid var(--line);font-size:0.88rem;font-family:inherit;outline:none;transition:border-color 0.15s;}
+  .chat-form input:focus,.chat-form textarea:focus{border-color:var(--blue-bright);}
+  .chat-form textarea{resize:none;height:64px;}
+  .chat-form button{padding:10px;border-radius:8px;background:var(--blue-deep);color:white;font-weight:600;font-size:0.9rem;transition:all 0.15s;}
+  .chat-form button:hover{background:var(--navy);}
+  .chat-form button:disabled{opacity:0.6;}
+
+  /* SECRET TRIGGER */
+  .secret-pixel{position:fixed;top:0;right:0;width:16px;height:16px;z-index:60;cursor:default;background:transparent;}
+
+  /* CODE PROMPT */
+  .modal-overlay{position:fixed;inset:0;z-index:70;background:rgba(11,42,74,0.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:white;border-radius:16px;padding:32px;max-width:380px;width:calc(100% - 48px);text-align:center;}
+  .modal-box h3{font-weight:800;font-size:1.25rem;color:var(--navy);margin-bottom:8px;}
+  .modal-box p{font-size:0.9rem;color:var(--slate);margin-bottom:20px;}
+  .modal-box input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);font-size:0.95rem;text-align:center;outline:none;margin-bottom:12px;}
+  .modal-box input:focus{border-color:var(--blue-bright);}
+  .modal-box .btns{display:flex;gap:8px;}
+  .modal-box .btns button{flex:1;padding:10px;border-radius:8px;font-weight:600;font-size:0.9rem;transition:all 0.15s;}
+  .modal-box .btn-confirm{background:var(--blue-deep);color:white;}
+  .modal-box .btn-confirm:hover{background:var(--navy);}
+  .modal-box .btn-cancel{border:1px solid var(--line);color:var(--slate);}
+  .modal-box .btn-cancel:hover{background:var(--blue-pale);}
+  .modal-error{color:#dc2626;font-size:0.82rem;margin-top:8px;display:none;}
+
+  /* SUPPORT DASHBOARD */
+  .support-dashboard{position:fixed;inset:0;z-index:80;background:var(--blue-paler);display:none;flex-direction:column;}
+  .support-dashboard.open{display:flex;}
+  .sd-header{background:var(--navy);color:white;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .sd-header .left{display:flex;align-items:center;gap:12px;}
+  .sd-header svg.icon{width:24px;height:24px;color:var(--blue-bright);}
+  .sd-header h2{font-weight:700;font-size:1.125rem;line-height:1.2;}
+  .sd-header .sub{font-size:0.75rem;color:#9db8d1;}
+  .sd-header .right{display:flex;align-items:center;gap:12px;}
+  .sd-header .count{font-size:0.875rem;color:#9db8d1;}
+  .sd-header .icon-btn{background:none;border:none;color:#9db8d1;cursor:pointer;padding:4px;}
+  .sd-header .icon-btn:hover{color:white;}
+  .sd-header .icon-btn svg{width:20px;height:20px;color:inherit;}
+  .sd-body{flex:1;overflow-y:auto;padding:24px;}
+  .sd-inner{max-width:960px;margin:0 auto;}
+  .sd-empty{text-align:center;padding:80px 24px;color:var(--slate);}
+  .sd-empty svg{width:48px;height:48px;margin:0 auto 12px;color:var(--line);}
+  .msg-list{display:flex;flex-direction:column;gap:16px;}
+  .msg-card{background:white;border-radius:12px;border:1px solid var(--line);padding:20px;box-shadow:var(--shadow);}
+  .msg-card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;}
+  .msg-card .name{font-weight:700;color:var(--navy);}
+  .msg-card .email{font-size:0.75rem;color:var(--slate);display:inline-flex;align-items:center;gap:4px;}
+  .msg-card .email svg{width:12px;height:12px;}
+  .msg-card .time{font-size:0.75rem;color:var(--slate-light);display:flex;align-items:center;gap:4px;margin-top:2px;}
+  .msg-card .time svg{width:12px;height:12px;}
+  .msg-card .badges{display:flex;align-items:center;gap:6px;}
+  .msg-card .status-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.75rem;font-weight:600;}
+  .msg-card .status-badge svg{width:12px;height:12px;}
+  .msg-card .text{font-size:0.875rem;color:var(--ink);margin-bottom:12px;}
+  .msg-card .reply-box{margin-top:12px;}
+  .msg-card .reply-textarea{width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--line);font-size:0.875rem;font-family:inherit;outline:none;resize:none;transition:border-color 0.15s;margin-bottom:8px;}
+  .msg-card .reply-textarea:focus{border-color:var(--blue-bright);}
+  .msg-card .reply-actions{display:flex;gap:8px;}
+  .msg-card .reply-actions .btn{padding:8px 16px;font-size:0.875rem;border-radius:8px;font-weight:600;transition:all 0.15s;}
+  .msg-card .reply-actions .btn-primary{background:var(--blue-deep);color:white;}
+  .msg-card .reply-actions .btn-primary:hover{background:var(--navy);}
+  .msg-card .reply-actions .btn-outline{border:1px solid var(--line);color:var(--slate);}
+  .msg-card .reply-actions .btn-outline:hover{background:var(--blue-pale);}
+  .msg-card .reply-link{display:inline-flex;align-items:center;gap:6px;font-size:0.875rem;font-weight:600;color:var(--blue-deep);cursor:pointer;transition:color 0.15s;background:none;border:none;font-family:inherit;padding:0;}
+  .msg-card .reply-link:hover{color:var(--blue-bright);}
+  .msg-card .reply-link svg{width:16px;height:16px;}
+  .msg-card .existing-reply{margin-top:8px;background:var(--blue-pale);border-radius:8px;padding:12px;font-size:0.875rem;}
+  .msg-card .existing-reply .label{font-size:0.75rem;font-weight:600;color:var(--blue-deep);margin-bottom:4px;}
+  .msg-card .no-email{font-size:0.75rem;color:var(--slate-light);font-style:italic;margin-top:8px;}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .feature-grid{grid-template-columns:1fr 1fr;}
+    .price-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    nav{display:none;}
+    .hero h1{font-size:2.1rem;}
+    .section-head h2{font-size:1.75rem;}
+  }
+  @media(max-width:560px){
+    .feature-grid{grid-template-columns:1fr;}
+    section{padding:56px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Pen &amp; Paper</span>
+        <span class="brand-tag">ERP</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a href="#pricing" class="btn-login">Log In</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="badge">Built for restaurants &amp; retail teams</div>
+      <h1>Run your <span>front line and back office</span> from one system.</h1>
+      <p>Pen &amp; Paper ERP connects your cashier, kitchen, inventory, and management teams in a single platform — so every shift runs on the same real-time data.</p>
+      <div class="hero-btns">
+        <a href="#pricing" class="btn-primary">Log In to Your Account</a>
+        <a href="#pricing" class="btn-outline">View Pricing</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-head">
+        <span class="hero-card-title">Today's Overview</span>
+        <div class="hero-card-dots"><div></div><div></div><div></div></div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">128</div><div class="hero-stat-lbl">Orders Today</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">96%</div><div class="hero-stat-lbl">On-Time Prep</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">14</div><div class="hero-stat-lbl">Staff on Shift</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-lbl">Low Stock Alerts</div></div>
+      </div>
+      <div class="hero-bar"><div class="hero-bar-fill"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-head">
+    <div class="section-badge">Cloud Platform</div>
+    <h2>Everything your operation needs, in one place</h2>
+    <p>From the cashier to the back office, every module works together on the same real-time data.</p>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+      <h3>POS (Cashier)</h3>
+      <p>Fast, reliable checkout built for high-volume counters and busy service.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <h3>Kitchen Display</h3>
+      <p>Orders route straight from the counter to the kitchen screen in real time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <h3>Inventory Management</h3>
+      <p>Track stock levels and get ahead of shortages before they hit the floor.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <h3>Analytics &amp; Reporting</h3>
+      <p>Sales, labor, and performance reports that update as your day happens.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <h3>Audit Logs</h3>
+      <p>A clear, timestamped record of every action taken across your system.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+      <h3>Manager Dashboard</h3>
+      <p>One screen for managers to oversee every location, shift, and team.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <h3>Shift Scheduling &amp; Attendance</h3>
+      <p>Build schedules and track clock-ins without leaving the platform.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+      <h3>Employee Performance Ranking</h3>
+      <p>Automatic performance rankings that help keep teams motivated.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-head">
+    <div class="section-badge">Cloud Pricing</div>
+    <h2>Simple, per-role pricing</h2>
+    <p>Pick what your team needs. Add users any time as you grow.</p>
+  </div>
+  <div class="price-grid">
+    <div class="price-card highlight">
+      <div class="price-tag">Front of House</div>
+      <h3>POS &amp; Kitchen</h3>
+      <div class="sub">Cashier and Kitchen Display access</div>
+      <div class="price-amount"><span class="amt">$64.99</span><span class="period">/ month</span></div>
+      <div class="price-note">Includes <strong>2 users</strong>. Each additional user is <strong>$9.99</strong>.</div>
+      <ul class="price-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>POS (Cashier)</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Kitchen Display</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Inventory Management</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Shift Scheduling &amp; Attendance</li>
+      </ul>
+      <a href="#" class="price-btn primary">Get Started</a>
+    </div>
+    <div class="price-card">
+      <h3>Manager &amp; Admin</h3>
+      <div class="sub">Dashboard, reporting, and oversight access</div>
+      <div class="price-amount"><span class="amt">1 Included</span></div>
+      <div class="price-note">1 manager/admin user included. Each additional user is <strong>$14.99</strong>.</div>
+      <ul class="price-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Manager Dashboard</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Analytics &amp; Reporting</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Audit Logs</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Employee of the Month Ranking</li>
+      </ul>
+      <a href="#" class="price-btn outline">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand-icon" style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--blue-bright),var(--navy));display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+      </div>
+      <p>Pen &amp; Paper ERP — the all-in-one platform for restaurants and retail teams. Run your front line and back office from a single system.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Pen &amp; Paper ERP. All rights reserved.</div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <h3>Support Chat</h3>
+    <button onclick="toggleChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg">Hi! How can we help you today? Leave a message and we'll get back to you.</div>
+  </div>
+  <form class="chat-form" id="chatForm" onsubmit="submitChat(event)">
+    <input type="text" id="chatName" placeholder="Your name (optional)" />
+    <input type="email" id="chatEmail" placeholder="Your contact email (MUST)" />
+    <textarea id="chatMessage" placeholder="Type your message..." required></textarea>
+    <button type="submit" id="chatSubmit">Send Message</button>
+  </form>
+</div>
+
+<!-- SECRET TRIGGER -->
+<div class="secret-pixel" onclick="openCodePrompt()" title=""></div>
+
+<!-- CODE PROMPT -->
+<div class="modal-overlay" id="codePrompt">
+  <div class="modal-box">
+    <h3>Access Required</h3>
+    <p>Enter your access code to open the support dashboard.</p>
+    <input type="password" id="codeInput" placeholder="Access code" onkeydown="if(event.key==='Enter')checkCode()" />
+    <div class="modal-error" id="codeError">Incorrect code. Try again.</div>
+    <div class="btns">
+      <button class="btn-cancel" onclick="closeCodePrompt()">Cancel</button>
+      <button class="btn-confirm" onclick="checkCode()">Enter</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUPPORT DASHBOARD -->
+<div class="support-dashboard" id="supportDashboard">
+  <div class="sd-header">
+    <div class="left">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+      <div><h2>Support Dashboard</h2><div class="sub">All visitor messages</div></div>
+    </div>
+    <div class="right">
+      <span class="count" id="sdCount"></span>
+      <button class="icon-btn" onclick="loadSdMessages()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+      <button class="icon-btn" onclick="closeSupportDashboard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+  </div>
+  <div class="sd-body">
+    <div class="sd-inner">
+      <div id="sdContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ===== CONFIG ===== */
+  /* The access code is NOT stored here. Only its SHA-256 hash is kept,
+     and the code you type is hashed and compared against it. */
+  var CODE_HASH = '8cf81918022224712a8e5ada2be3635e56ca0d8b79b7359bbebea34238eb08f6';
+  var STORAGE_KEY_CHAT = 'pp_erp_chat_messages';
+
+  /* ===== SAFE STORAGE (works even where localStorage is blocked, e.g. sandboxed previews) ===== */
+  var memStore = {};
+  function safeGet(key) {
+    try { return localStorage.getItem(key); } catch (e) { return memStore[key] || null; }
+  }
+  function safeSet(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) { memStore[key] = val; }
+  }
+
+  /* ===== SHA-256 (pure JS, no dependencies, works in any context) ===== */
+  function sha256(ascii) {
+    function rightRotate(value, amount) {
+      return (value >>> amount) | (value << (32 - amount));
+    }
+    var mathPow = Math.pow;
+    var maxWord = mathPow(2, 32);
+    var lengthProperty = 'length';
+    var i, j;
+    var result = '';
+    var words = [];
+    var asciiBitLength = ascii[lengthProperty] * 8;
+    var hash = sha256.h = sha256.h || [];
+    var k = sha256.k = sha256.k || [];
+    var primeCounter = k[lengthProperty];
+    var isComposite = {};
+    for (var candidate = 2; primeCounter < 64; candidate++) {
+      if (!isComposite[candidate]) {
+        for (i = 0; i < 313; i += candidate) {
+          isComposite[i] = candidate;
+        }
+        hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+        k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+      }
+    }
+    ascii += '\x80';
+    while ((ascii[lengthProperty] % 64) - 56) ascii += '\x00';
+    for (i = 0; i < ascii[lengthProperty]; i++) {
+      j = ascii.charCodeAt(i);
+      if (j >> 8) return; // ASCII / Latin-1 only
+      words[i >> 2] |= j << (((3 - i) % 4) * 8);
+    }
+    words[words[lengthProperty]] = (asciiBitLength / maxWord) | 0;
+    words[words[lengthProperty]] = asciiBitLength;
+    for (j = 0; j < words[lengthProperty];) {
+      var w = words.slice(j, (j += 16));
+      var oldHash = hash;
+      hash = hash.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2];
+        var a = hash[0], e = hash[4];
+        var temp1 = hash[7]
+          + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+          + ((e & hash[5]) ^ (~e & hash[6]))
+          + k[i]
+          + (w[i] = i < 16 ? w[i] : (w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))) | 0);
+        var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+          + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(temp1 + temp2) | 0].concat(hash);
+        hash[4] = (hash[4] + temp1) | 0;
+      }
+      for (i = 0; i < 8; i++) {
+        hash[i] = (hash[i] + oldHash[i]) | 0;
+      }
+    }
+    for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) {
+        var b = (hash[i] >> (j * 8)) & 255;
+        result += (b < 16 ? 0 : '') + b.toString(16);
+      }
+    }
+    return result;
+  }
+
+  /* ===== CHAT WIDGET ===== */
+  function toggleChat() {
+    document.getElementById('chatPanel').classList.toggle('open');
+  }
+
+  function submitChat(e) {
+    e.preventDefault();
+    var name = document.getElementById('chatName').value.trim() || 'Anonymous';
+    var email = document.getElementById('chatEmail').value.trim();
+    var message = document.getElementById('chatMessage').value.trim();
+    if (!message) return;
+
+    var btn = document.getElementById('chatSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    var messages = [];
+    try { messages = JSON.parse(safeGet(STORAGE_KEY_CHAT) || '[]'); } catch(err) {}
+
+    var msg = {
+      id: 'msg-' + Date.now(),
+      visitor_name: name,
+      visitor_email: email,
+      message: message,
+      status: 'unread',
+      created_date: new Date().toISOString()
+    };
+    messages.push(msg);
+    safeSet(STORAGE_KEY_CHAT, JSON.stringify(messages));
+
+    var body = document.getElementById('chatBody');
+    body.innerHTML = '<div class="chat-success">Thanks! Your message has been received. We\'ll get back to you soon.</div>';
+
+    document.getElementById('chatForm').reset();
+    btn.disabled = false;
+    btn.textContent = 'Send Message';
+
+    setTimeout(function() {
+      body.innerHTML = '<div class="chat-msg">Hi! How can we help you today? Leave a message and we\'ll get back to you.</div>';
+    }, 5000);
+  }
+
+  /* ===== SECRET TRIGGER ===== */
+  function openCodePrompt() {
+    document.getElementById('codePrompt').classList.add('open');
+    var input = document.getElementById('codeInput');
+    input.value = '';
+    document.getElementById('codeError').style.display = 'none';
+    setTimeout(function() { input.focus(); }, 100);
+  }
+
+  function closeCodePrompt() {
+    document.getElementById('codePrompt').classList.remove('open');
+  }
+
+  function checkCode() {
+    var input = document.getElementById('codeInput').value;
+    var hashed = sha256(input);
+    if (hashed === CODE_HASH) {
+      closeCodePrompt();
+      document.getElementById('supportDashboard').classList.add('open');
+      loadSdMessages();
+    } else {
+      document.getElementById('codeError').style.display = 'block';
+    }
+  }
+
+  function closeSupportDashboard() {
+    document.getElementById('supportDashboard').classList.remove('open');
+  }
+
+  /* ===== SUPPORT DASHBOARD ===== */
+  function loadSdMessages() {
+    var content = document.getElementById('sdContent');
+    var countEl = document.getElementById('sdCount');
+    var messages = [];
+    try { messages = JSON.parse(safeGet(STORAGE_KEY_CHAT) || '[]'); } catch(err) {}
+    messages = messages.slice().reverse();
+    countEl.textContent = messages.length + ' message' + (messages.length !== 1 ? 's' : '');
+
+    if (messages.length === 0) {
+      content.innerHTML = '<div class="sd-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg><p>No visitor messages yet.</p></div>';
+      return;
+    }
+
+    var html = '<div class="msg-list">';
+    messages.forEach(function(m) {
+      var status = m.status || 'unread';
+      var statusIcon, statusLabel, statusColor;
+      if (status === 'replied') {
+        statusIcon = '<polyline points="9 17 4 12 7 9"/>';
+        statusLabel = 'Replied';
+        statusColor = 'color:#16a34a;';
+      } else if (status === 'read') {
+        statusIcon = '<polyline points="20 6 9 17 4 12"/>';
+        statusLabel = 'Read';
+        statusColor = 'color:#16a34a;';
+      } else {
+        statusIcon = '<circle cx="12" cy="12" r="10"/>';
+        statusLabel = 'Unread';
+        statusColor = 'color:#2f8fe0;';
+      }
+      var emailHtml = m.visitor_email
+        ? '<span class="email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' + escapeHtml(m.visitor_email) + '</span>'
+        : '';
+      var dateStr = m.created_date ? new Date(m.created_date).toLocaleString() : '—';
+
+      var replyHtml = '';
+      if (m.reply) {
+        replyHtml = '<div class="existing-reply"><div class="label">Your reply:</div><p>' + escapeHtml(m.reply) + '</p></div>';
+      } else if (m.visitor_email) {
+        replyHtml = '<div class="reply-box" id="reply-' + m.id + '">' +
+          '<button class="reply-link" onclick="showReplyBox(\'' + m.id + '\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 7 9"/><path d="M20 7L9 18l-5-5"/></svg> Reply by email</button>' +
+        '</div>';
+      } else {
+        replyHtml = '<p class="no-email">No email provided — cannot reply.</p>';
+      }
+
+      html += '<div class="msg-card" id="msg-card-' + m.id + '">' +
+        '<div class="top"><div>' +
+        '<span class="name">' + escapeHtml(m.visitor_name || 'Anonymous') + '</span> ' + emailHtml +
+        '<div class="time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + dateStr + '</div>' +
+        '</div><div class="badges">' +
+        '<span class="status-badge" style="' + statusColor + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + statusIcon + '</svg>' + statusLabel + '</span>' +
+        '</div></div><p class="text">' + escapeHtml(m.message) + '</p>' + replyHtml + '</div>';
+    });
+    html += '</div>';
+    content.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function showReplyBox(msgId) {
+    var box = document.getElementById('reply-' + msgId);
+    if (!box) return;
+    box.innerHTML =
+      '<textarea class="reply-textarea" id="reply-text-' + msgId + '" rows="2" placeholder="Type your reply..."></textarea>' +
+      '<div class="reply-actions">' +
+        '<button class="btn btn-primary" onclick="sendReply(\'' + msgId + '\')">Send Reply</button>' +
+        '<button class="btn btn-outline" onclick="cancelReply(\'' + msgId + '\')">Cancel</button>' +
+      '</div>';
+    var ta = document.getElementById('reply-text-' + msgId);
+    if (ta) ta.focus();
+  }
+
+  function cancelReply(msgId) {
+    var box = document.getElementById('reply-' + msgId);
+    if (!box) return;
+    box.innerHTML = '<button class="reply-link" onclick="showReplyBox(\'' + msgId + '\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 7 9"/><path d="M20 7L9 18l-5-5"/></svg> Reply by email</button>';
+  }
+
+  function sendReply(msgId) {
+    var ta = document.getElementById('reply-text-' + msgId);
+    if (!ta || !ta.value.trim()) return;
+    var replyText = ta.value.trim();
+    var local = [];
+    try { local = JSON.parse(safeGet(STORAGE_KEY_CHAT) || '[]'); } catch(err) {}
+    var msg = local.find(function(m) { return m.id === msgId; });
+    if (!msg) return;
+    msg.status = 'replied';
+    msg.reply = replyText;
+    safeSet(STORAGE_KEY_CHAT, JSON.stringify(local));
+    window.location.href = 'mailto:' + encodeURIComponent(msg.visitor_email) +
+      '?subject=' + encodeURIComponent('Reply from Pen & Paper ERP Support') +
+      '&body=' + encodeURIComponent('Hi ' + (msg.visitor_name || 'there') + ',\n\n' + replyText + '\n\n— Pen & Paper ERP Support Team');
+    loadSdMessages();
+  }
+</script>
+
+</body>
+</html>
